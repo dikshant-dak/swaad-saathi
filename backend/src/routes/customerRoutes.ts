@@ -1,10 +1,8 @@
 import express from 'express';
-// import { getRepository } from 'typeorm';
 import { myDataSource } from '../../app-data-source';
 import { Customer } from '../entity/customer.entity';
 
 const router = express.Router();
-// const customerRepository = getRepository(Customer);
 
 router.get('/customers', async (req, res) => {
     try {

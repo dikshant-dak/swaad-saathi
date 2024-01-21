@@ -1,6 +1,4 @@
 import express from 'express';
-// import { createConnection } from 'typeorm';
-// import { connectToDatabase } from './database';
 import customerRoutes from './routes/customerRoutes';
 import { myDataSource } from "../app-data-source";
 
@@ -22,6 +20,7 @@ app.use(express.json());
 app.use(async (req, res, next) => {
     try {
       next();
+      console.log("Connection to the database has been established successfully 🚀🚀")
     } catch (error) {
       console.error('Error connecting to the database:', error);
       res.status(500).json({ error: 'Internal Server Error' });

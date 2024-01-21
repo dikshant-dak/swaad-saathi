@@ -6,6 +6,7 @@ config();
 
 const supabaseUrl = process.env.SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_KEY || '';
+const supabasePassword = process.env.SUPABASE_PASSWORD || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const myDataSource = new DataSource({
@@ -13,7 +14,7 @@ export const myDataSource = new DataSource({
     host: "db.ynbzocihmrlgevphtdle.supabase.co",
     port: 5432,
     username: "postgres",
-    password: process.env.SUPABASE_PASSWORD,
+    password: supabasePassword,
     database: "postgres",
     entities: ["./src/entity/customer.entity.ts"],
     logging: true,
