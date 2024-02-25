@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
 export class Customer extends BaseEntity {
+  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
@@ -19,6 +20,8 @@ export class Customer extends BaseEntity {
 
   @Column()
   phone!: string;
+
+  
 }
 
 

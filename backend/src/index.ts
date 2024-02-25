@@ -1,6 +1,7 @@
 import express from 'express';
 import customerRoutes from './routes/customerRoutes';
 import { myDataSource } from "../app-data-source";
+import orderRoutes from './routes/orderRoutes';
 
 myDataSource
     .initialize()
@@ -32,3 +33,8 @@ app.use(customerRoutes);
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+app.use(orderRoutes);
+ app.listen(PORT, async () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+} );
