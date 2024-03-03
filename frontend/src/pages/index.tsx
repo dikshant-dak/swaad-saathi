@@ -1,11 +1,23 @@
+import React, { useState } from 'react'
+import Link  from 'next/link'
+
 export default function Home() {
+
   return (
-    <main>
-      <div className="flex items-center justify-center">
-        <h1 className="text-5xl font-bold text-center text-gray-800">
-          Hello, This is Home Page of our app
-        </h1>
-      </div>
-    </main>
-  );
+    <>
+    
+      <main>
+        <div className="h-screen">
+          <div>
+            <Link href="/login">
+              <button>Show Login</button>
+            </Link>
+            <Link href="/registration">
+              <button>Show Registration</button>
+            </Link>
+          </div>
+        </div>
+      </main>
+    </>
+  )
 }
