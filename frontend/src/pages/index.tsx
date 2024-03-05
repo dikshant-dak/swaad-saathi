@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Link  from 'next/link'
+import FrontPage from './frontPage'
 
 export default function Home() {
 
@@ -7,16 +8,8 @@ export default function Home() {
     <>
     
       <main>
-        <div className="h-screen">
-          <div>
-            <Link href="/login">
-              <button>Show Login</button>
-            </Link>
-            <Link href="/registration">
-              <button>Show Registration</button>
-            </Link>
-          </div>
-        </div>
+        <FrontPage/>
+      
       </main>
     </>
   )

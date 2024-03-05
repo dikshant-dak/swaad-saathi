@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { useState } from 'react'
 const RegistrationPage = () => {
   const backgroundImageUrl =
@@ -55,7 +56,7 @@ const RegistrationPage = () => {
           <div className="card bg-orange-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform -rotate-3"></div>
 
           <div className="card bg-red-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform   rotate-3"></div>
-          <div className=" relative bg-gray-100 rounded-2xl w-2/4 h-96">
+          <div className=" relative bg-gray-100  rounded-2xl w-2/4 h-96">
             <label className="block mt-3 text-xl text-gray-700 text-center mb-6 font-semibold">
               Registration
             </label>
@@ -117,7 +118,9 @@ const RegistrationPage = () => {
               <div className="w-1/2  ml-6">
                 <label className="block font-medium text-sm text-sky-950 w-full">
                   Already Have An Account ?
-                  <span className="text-cyan-500"> Sign In </span>
+                  <Link href="/login">
+                    <span className="text-cyan-500"> Sign In </span>
+                  </Link>
                 </label>
               </div>
               <div className="w-96 m-4 pl-2 flex justify-end">
@@ -129,13 +132,6 @@ const RegistrationPage = () => {
                   Register
                 </button>
               </div>
-            </div>
-
-            <div className="flex mt-7 items-center text-center ">
-              <label className="block font-medium text-sm text-sky-950 w-full">
-                Already Have An Account ?
-                <span className="text-cyan-500"> Sign In </span>
-              </label>
             </div>
           </div>
         </div>
