@@ -1,24 +1,26 @@
+
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
 export class Customer extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
-  @Column()
-  firstName!: string;
+  @Column({ nullable: true })
+  firstName!: string
 
-  @Column()
-  lastName!: string;
+  @Column({ nullable: true })
+  lastName!: string
 
-  @Column()
-  age!: number;
+  @Column({ nullable: true })
+  age!: number
 
-  @Column()
-  email!: string;
+  @Column({ nullable: true })
+  email!: string
 
-  @Column()
-  phone!: string;
+  @Column({ nullable: true })
+  password!: string
+
+  @Column({ nullable: true })
+  phone!: string
 }
-
-
