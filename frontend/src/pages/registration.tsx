@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
+
 const RegistrationPage = () => {
-  const backgroundImageUrl =
-    'https://t3.ftcdn.net/jpg/01/62/24/30/240_F_162243061_TUbVXao3vDGMXnGBr9HvCchQecRhl0r4.jpg'
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -44,13 +43,13 @@ const RegistrationPage = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div
-          className="relative min-h-screen flex flex-col sm:justify-center items-center bg-violet-700 "
-          style={{
-            backgroundImage: `url(${backgroundImageUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
+          className="relative min-h-screen flex flex-col sm:justify-center items-center bgImageAuth"
+          // style={{
+          //   backgroundImage: `url(${bgImage})`,
+          //   backgroundSize: 'cover',
+          //   backgroundPosition: 'center',
+          //   backgroundRepeat: 'no-repeat'
+          // }}
         >
           <div className="card bg-orange-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform -rotate-3"></div>
           <div className="card bg-orange-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform -rotate-3"></div>

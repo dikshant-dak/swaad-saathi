@@ -2,9 +2,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Login() {
-  const backgroundImageUrl =
-    'https://t3.ftcdn.net/jpg/01/62/24/30/240_F_162243061_TUbVXao3vDGMXnGBr9HvCchQecRhl0r4.jpg'
-
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -40,13 +37,13 @@ export default function Login() {
   return (
     <>
       <div
-        className="relative min-h-screen flex flex-col  sm:justify-center items-center bg-violet-700 "
-        style={{
-          backgroundImage: `url(${backgroundImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="relative min-h-screen flex flex-col  sm:justify-center items-center bgImageAuth"
+        // style={{
+        //   backgroundImage: `url(${bgImage})`,
+        //   backgroundSize: 'cover',
+        //   backgroundPosition: 'center',
+        //   backgroundRepeat: 'no-repeat'
+        // }}
       >
         <div className="relative sm:max-w-sm w-full">
           <div className="card bg-orange-600 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>

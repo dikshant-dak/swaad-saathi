@@ -31,3 +31,10 @@ body {
     text-wrap: balance;
   }
 } */
+
+.bgImageAuth {
+  background-image: url("../../public/images/main.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
