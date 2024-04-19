@@ -11,12 +11,12 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const myDataSource = new DataSource({
     type: "postgres",
-    host: "db.ynbzocihmrlgevphtdle.supabase.co",
+    host: "aws-0-ap-south-1.pooler.supabase.com",
     port: 5432,
-    username: "postgres",
+    username: "postgres.iiusrsmhivrdravaahxf",
     password: supabasePassword,
     database: "postgres",
-    entities: ["./src/entity/customer.entity.ts"],
+    entities: ["./src/entity/customer.entity.ts","./src/entity/restaurant.entity.ts","./src/entity/city.entity.ts"],
     logging: true,
     synchronize: true,
 })

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import { City } from './city.entity';
 
 @Entity()
 export class Restaurant extends BaseEntity {
@@ -12,13 +13,20 @@ export class Restaurant extends BaseEntity {
   name!: string;
 
   @Column()
-  type!: number;
+  type!: string;
 
   @Column()
   description!: string;
 
   @Column()
-  rating!: string;
+  rating!: number;
+
+  @Column()
+  cityId!: string;
+
+  // @Column()
+  @ManyToOne(() => City, city => city.restaurants)
+  city!: City;
 }
 
 
