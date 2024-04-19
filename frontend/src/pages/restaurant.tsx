@@ -3,9 +3,11 @@ import Rating from "react-rating-stars-component";
 
 export default function Restaurant() {
     const [restaurants, setRestaurants] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(true);
 // console.log(restaurants[0].city)
     useEffect(() => {
         async function fetchData() {
+            setIsLoading(true);
             try {
                 const response = await fetch("http://localhost:4000/restaurant/03e46085-f0f7-4a76-a82d-13a6e93db9e7");
                 const result = await response.json();
@@ -13,11 +15,15 @@ export default function Restaurant() {
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
+            setIsLoading(false);
         }
 
         fetchData();
     }, []);
 console.log(restaurants)
+if (isLoading) {
+    return <div>Loading...</div>; // Render loading text while data is being fetched
+}
     return (
         <main className="container mx-auto py-8 flex justify-center">
             <div className="grid gap-6">
