@@ -14,7 +14,6 @@ router.get('/restaurant/:id', async (req, res) => {
             },
             relations: ["city"]
         });
-        console.log(restaurant)
         res.json(restaurant);
         if (!restaurant) {
             return res.status(404).json({ error: 'Restaurant not found' });

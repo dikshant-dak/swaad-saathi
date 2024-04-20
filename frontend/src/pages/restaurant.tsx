@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import { useEffect, useState } from "react";
 import Rating from "react-rating-stars-component";
 
@@ -25,6 +27,8 @@ if (isLoading) {
     return <div>Loading...</div>; // Render loading text while data is being fetched
 }
     return (
+        <>
+         <Header />
         <main className="container mx-auto py-8 flex justify-center">
             <div className="grid gap-6">
                 <h1 className="text-3xl font-semibold text-center mb-8">{restaurants[0].city.cityName} Restaurant</h1>
@@ -54,5 +58,7 @@ if (isLoading) {
                 ))}
             </div>
         </main>
+        <Footer/>
+        </>
     );
 }
