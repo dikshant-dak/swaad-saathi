@@ -34,6 +34,8 @@ export default function Login() {
       console.error('Error during login:', error)
     }
   }
+
+  console.log("for push")
   return (
     <>
       <div
