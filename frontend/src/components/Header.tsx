@@ -56,7 +56,7 @@ const Header = () => {
             Account
           </Link>
           <Link
-            href="/"
+            href="/restaurant"
             id="restaurant"
             className={` tracking-wider ${
               underlinedOption === 'restaurant' ? 'underline ' : null

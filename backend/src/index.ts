@@ -1,7 +1,8 @@
-import express from 'express'
+import express from 'express';
 import cors from 'cors'
-import customerRoutes from './routes/customerRoutes'
-import { myDataSource } from '../app-data-source'
+import customerRoutes from './routes/customerRoutes';
+import restaurantRoutes from './routes/restaurantRoutes';
+import { myDataSource } from "../app-data-source";
 
 myDataSource
   .initialize()
@@ -30,7 +31,7 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use(customerRoutes)
+app.use(customerRoutes,restaurantRoutes);
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`)
