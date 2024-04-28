@@ -9,7 +9,6 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const inputSearch = useRef<HTMLInputElement>(null)
 
-  console.log('for merge request')
 
   useEffect(() => {
     async function fetchData() {

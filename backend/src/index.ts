@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors'
 import customerRoutes from './routes/customerRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
+import itemRoutes from './routes/itemRoutes';
 import { myDataSource } from "../app-data-source";
 import cityRoutes from './routes/cityRoutes';
 
@@ -32,7 +33,7 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use(customerRoutes,restaurantRoutes,cityRoutes);
+app.use(customerRoutes,restaurantRoutes,cityRoutes,itemRoutes);
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`)
