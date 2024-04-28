@@ -18,6 +18,6 @@ export class Items extends BaseEntity {
   @Column()
   restaurantId!: string
 
-  // @ManyToOne(() => Restaurant, restaurant => restaurant.items)
-  // restaurant!: Restaurant
+  @ManyToOne(() => Restaurant, restaurant => restaurant.items)
+  restaurant!: Restaurant
 }
