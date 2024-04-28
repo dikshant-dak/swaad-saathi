@@ -36,6 +36,6 @@ export class Restaurant extends BaseEntity {
   @ManyToOne(() => City, city => city.restaurants)
   city!: City
 
-  // @OneToMany(() => Items, items => items.restaurant)
-  // items!: Items[]
+  @OneToMany(() => Items, items => items.restaurant)
+  items!: Items[]
 }
