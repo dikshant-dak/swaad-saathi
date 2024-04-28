@@ -1,89 +1,103 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
-  const [selected, setSelected] = useState('add')
+  const [selected, setSelected] = useState("add");
   const [data, setData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    category: 'Salad'
-  })
+    name: "",
+    description: "",
+    price: "",
+    category: "Salad",
+  });
 
-  const [loading, setLoading] = useState(false)
-  const [city, setCity] = useState([])
-  const [restaurants, setRestaurants] = useState([])
+  const [loading, setLoading] = useState(false);
+  const [city, setCity] = useState([]);
+  const [restaurants, setRestaurants] = useState<any>([]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     setLoading(true)
-  //     try {
-  //       const response = await fetch('http://localhost:4000/cities')
-  //       const result = await response.json()
-  //       setCity(result)
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error)
-  //     }
-  //     setLoading(false)
-  //   }
-
-  //   fetchData()
-  // }, [])
-
+  // console.log(restaurants[0].city)
   useEffect(() => {
     async function fetchData() {
-      setLoading(true)
       try {
-        const response = await fetch(
-          'http://localhost:4000/restaurant/03e46085-f0f7-4a76-a82d-13a6e93db9e7'
-        )
-        const result = await response.json()
-        setRestaurants(result)
+        const response = await fetch("http://localhost:4000/allrestaurants");
+        const result = await response.json();
+        setRestaurants(result);
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error("Error fetching data:", error);
       }
     }
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  console.log({restaurants})
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("http://localhost:4000/cities");
+        const result = await response.json();
+        setCity(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          "http://localhost:4000/restaurant/03e46085-f0f7-4a76-a82d-13a6e93db9e7"
+        );
+        const result = await response.json();
+        setRestaurants(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const [formData, setFormData] = useState({
-    restaurantName: '',
-    description: '',
-    type: '',
-    rating: '',
-    city: ''
-  })
+    restaurantName: "",
+    description: "",
+    type: "",
+    rating: 0,
+    city: "",
+    img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/c3/ba/40/bars-pubs-meal-type.jpg?w=800&h=-1&s=1",
+  });
 
-  console.log(formData)
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault()
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:4000/addresturant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.restaurantName,
+          description: formData.description,
+          type: formData.type,
+          rating: formData.rating,
+          cityId: formData.city,
+          img: formData.img,
+        }),
+      });
 
-  //   try {
-  //     const response = await fetch('http://localhost:4000/addresturant', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(formData)
-  //     })
-  //     console.log('Response:', response)
-
-  //     const data = await response.json()
-  //     console.log('Response:', data)
-  //   } catch (error) {
-  //     console.error('Error adding restaurant:', error)
-  //   }
-  // }
-
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error adding restaurant:", error);
+    }
+  };
 
   return (
     <div className="flex">
@@ -92,11 +106,11 @@ const Sidebar = () => {
           <div
             className="flex items-center gap-3 border stroke-slate-800 border-r-0 p-2 hover: cursor-pointer"
             onClick={() => {
-              setSelected('add')
-              window.history.pushState({}, '', '/add')
+              setSelected("add");
+              window.history.pushState({}, "", "/add");
             }}
             style={{
-              borderLeft: selected === 'add' ? '4px solid #FF6B6B' : 'none'
+              borderLeft: selected === "add" ? "4px solid #FF6B6B" : "none",
             }}
           >
             <p>Add Restaurant</p>
@@ -104,10 +118,10 @@ const Sidebar = () => {
           <div
             className="flex items-center gap-3 border stroke-slate-800 border-r-0 p-2 hover: cursor-pointer"
             style={{
-              borderLeft: selected === 'list' ? '4px solid #FF6B6B' : 'none'
+              borderLeft: selected === "list" ? "4px solid #FF6B6B" : "none",
             }}
             onClick={() => {
-              setSelected('list')
+              setSelected("list");
             }}
           >
             <p>Add Items</p>
@@ -115,10 +129,10 @@ const Sidebar = () => {
           <div
             className="flex items-center gap-3 border stroke-slate-800 border-r-0 p-2 hover: cursor-pointer"
             style={{
-              borderLeft: selected === 'orders' ? '4px solid #FF6B6B' : 'none'
+              borderLeft: selected === "orders" ? "4px solid #FF6B6B" : "none",
             }}
             onClick={() => {
-              setSelected('orders')
+              setSelected("orders");
             }}
           >
             <p>Orders</p>
@@ -126,7 +140,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="w-[80%] p-5">
-        {selected === 'add' ? (
+        {selected === "add" ? (
           <div className="w-[70%] ml-4 mt-4  text-xl">
             <form className="flex-col">
               <div className="flex gap-5">
@@ -202,30 +216,31 @@ const Sidebar = () => {
                 <select
                   id="city"
                   name="city"
-                  value={formData.city}
+                  value={formData?.city}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 >
-                  <option value="">Select City</option>
-                  <option value="udaipur">Udaipur</option>
-                  <option value="surat">Surat</option>
-                  <option value="jaipur">Jaipur</option>
-                  <option value="ahmedabad">Ahmedabad</option>
+                  <option>Select City</option>
+                  {Array.isArray(city) &&
+                    city.map((city: any) => (
+                      <option key={city.id} value={city.id}>
+                        {city.cityName}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="flex justify-end mt-5">
                 <button
-                  type="submit"
                   className="max-w-[120px] border-none p-2 bg-[#FF6B6B] text-white hover:cursor-pointer rounded-xl flex text-lg"
-                  onClick={() => {}}
+                  onClick={handleSubmit}
                 >
                   ADD
                 </button>
               </div>
             </form>
           </div>
-        ) : selected === 'list' ? (
+        ) : selected === "list" ? (
           <form className="flex-col">
             <div className="flex gap-5">
               <label
@@ -236,20 +251,17 @@ const Sidebar = () => {
               </label>
               <select>
                 <option value="">Select Restaurant</option>
-                <select>
-                  <option value="">Select Restaurant</option>
-                  {restaurants && Array.isArray(restaurants) ? (
-                    restaurants.map((restaurant: any) => (
-                      <option key={restaurant.id} value={restaurant.id}>
-                        {restaurant.name}
-                      </option>
-                    ))
-                  ) : (
-                    <option value="" disabled>
-                      Loading...
+                {restaurants && Array.isArray(restaurants) ? (
+                  restaurants.map((restaurant: any) => (
+                    <option key={restaurant.id} value={restaurant.id}>
+                      {restaurant.name}
                     </option>
-                  )}
-                </select>
+                  ))
+                ) : (
+                  <option value="" disabled>
+                    Loading...
+                  </option>
+                )}
               </select>
             </div>
             <div className="flex gap-5 mt-5">
@@ -337,16 +349,18 @@ const Sidebar = () => {
               <select
                 id="city"
                 name="city"
-                value={formData.city}
+                value={formData?.city}
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option value="">Select City</option>
-                <option value="udaipur">Udaipur</option>
-                <option value="surat">Surat</option>
-                <option value="jaipur">Jaipur</option>
-                <option value="ahmedabad">Ahmedabad</option>
+                <option>Select City</option>
+                {Array.isArray(city) &&
+                  city.map((city: any) => (
+                    <option key={city.id} value={city.id}>
+                      {city.cityName}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="flex justify-end mt-5">
@@ -359,11 +373,11 @@ const Sidebar = () => {
             </div>
           </form>
         ) : (
-          'ijkl'
+          "ijkl"
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
