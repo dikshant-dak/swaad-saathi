@@ -1,32 +1,41 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
-import { City } from './city.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm'
+import { City } from './city.entity'
+import { Items } from './items.entity'
 
 @Entity()
 export class Restaurant extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id!: string
 
   @Column()
-  img!: string;
+  img!: string
 
   @Column()
-  name!: string;
+  name!: string
 
   @Column()
-  type!: string;
+  type!: string
 
   @Column()
-  description!: string;
+  description!: string
 
   @Column()
-  rating!: number;
+  rating!: number
 
   @Column()
-  cityId!: string;
+  cityId!: string
 
   // @Column()
   @ManyToOne(() => City, city => city.restaurants)
-  city!: City;
+  city!: City
+
+  // @OneToMany(() => Items, items => items.restaurant)
+  // items!: Items[]
 }
-
-
