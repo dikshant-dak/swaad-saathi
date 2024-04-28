@@ -31,7 +31,7 @@ if (isLoading) {
          <Header />
         <main className="container mx-auto py-8 flex justify-center">
             <div className="grid gap-6">
-                <h1 className="text-3xl font-semibold text-center mb-8">{restaurants[0].city.cityName} Restaurant</h1>
+                <h1 className="text-3xl font-semibold text-center mb-8">{restaurants[0]?.city.cityName} Restaurant</h1>
                 {restaurants.map((restaurant:any) => (
                     <div key={restaurant.id} className="rounded-lg shadow-md overflow-hidden">
                         <div className="flex flex-col md:flex-row">
