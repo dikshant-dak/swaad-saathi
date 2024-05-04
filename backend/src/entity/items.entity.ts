@@ -3,9 +3,11 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm'
 import { Restaurant } from './restaurant.entity'
+import { CartItems } from './cartItems.entity'
 
 @Entity()
 export class Items extends BaseEntity {
@@ -29,4 +31,7 @@ export class Items extends BaseEntity {
 
   @ManyToOne(() => Restaurant, restaurant => restaurant.items)
   restaurant!: Restaurant
+
+  @OneToMany(() => CartItems, items => items.items)
+  cartItems!: CartItems[]
 }

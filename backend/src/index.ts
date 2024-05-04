@@ -5,6 +5,7 @@ import restaurantRoutes from './routes/restaurantRoutes';
 import itemRoutes from './routes/itemRoutes';
 import { myDataSource } from "../app-data-source";
 import cityRoutes from './routes/cityRoutes';
+import cartItemRoutes from './routes/cartItemRoutes';
 
 myDataSource
   .initialize()
@@ -33,7 +34,7 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use(customerRoutes,restaurantRoutes,cityRoutes,itemRoutes);
+app.use(customerRoutes,restaurantRoutes,cityRoutes,itemRoutes,cartItemRoutes);
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`)

@@ -16,7 +16,7 @@ export const myDataSource = new DataSource({
     username: "postgres.iiusrsmhivrdravaahxf",
     password: supabasePassword,
     database: "postgres",
-    entities: ["./src/entity/customer.entity.ts","./src/entity/restaurant.entity.ts","./src/entity/city.entity.ts","./src/entity/items.entity.ts"],
+    entities: ["./src/entity/customer.entity.ts","./src/entity/restaurant.entity.ts","./src/entity/city.entity.ts","./src/entity/items.entity.ts","./src/entity/cartItems.entity.ts"],
     logging: true,
     synchronize: true,
 })
