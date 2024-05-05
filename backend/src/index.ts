@@ -1,7 +1,11 @@
-import express from 'express'
-import cors from 'cors'
-import customerRoutes from './routes/customerRoutes'
-import { myDataSource } from '../app-data-source'
+import cors from 'cors';
+import express from 'express';
+import { myDataSource } from "../app-data-source";
+import cityRoutes from './routes/cityRoutes';
+import customerRoutes from './routes/customerRoutes';
+import itemRoutes from './routes/itemRoutes';
+import orderRoutes from './routes/orderRoutes';
+import restaurantRoutes from './routes/restaurantRoutes';
 
 myDataSource
   .initialize()
@@ -30,7 +34,7 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use(customerRoutes)
+app.use(customerRoutes,restaurantRoutes,cityRoutes,itemRoutes, orderRoutes);
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`)

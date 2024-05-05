@@ -1,8 +1,9 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Customer extends BaseEntity {
+  [x: string]: any;
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
