@@ -61,33 +61,54 @@ const Menu = () => {
   //     console.log('--------menu-------', menuItems)
   //   }
   // }, [router.query])
-  const handleApi = async () => {
-    console.log('-------------ab dekh te he ', id)
-    try {
-      fetch(`http://localhost:4000/menuOfRestaurant/${id}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Failed to fetch menu items')
-          }
-          return response.json()
-        })
-        .then(data => {
-          setMenuItems(data) // Set the fetched menu items in state
-        })
-        .catch(error => {
-          console.error('Error fetching menu items:', error)
-          // Handle error
-        })
-      console.log('ho gaya', menuItems)
-    } catch {
-      console.log('dekat he ')
+  // const handleApi = async () => {
+  //   console.log('-------------ab dekh te he ', id)
+  //   try {
+  //     fetch(`http://localhost:4000/menuOfRestaurant/${id}`)
+  //       .then(response => {
+  //         if (!response.ok) {
+  //           throw new Error('Failed to fetch menu items')
+  //         }
+  //         return response.json()
+  //       })
+  //       .then(data => {
+  //         setMenuItems(data) // Set the fetched menu items in state
+  //       })
+  //       .catch(error => {
+  //         console.error('Error fetching menu items:', error)
+  //         // Handle error
+  //       })
+  //     console.log('ho gaya', menuItems)
+  //   } catch {
+  //     console.log('dekat he ')
+  //   }
+  // }
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/menuOfRestaurant/${id}`
+        )
+        if (!response.ok) {
+          throw new Error('Failed to fetch menu items')
+        }
+        const data = await response.json()
+        setMenuItems(data)
+      } catch (error) {
+        console.error('Error fetching menu items:', error)
+        // Handle error
+      }
     }
-  }
+
+    if (id) {
+      fetchMenuItems()
+    }
+  }, [id])
 
   return (
     <>
       <Header />
-      <button onClick={handleApi}>bvbjdb</button>
+      {/* <button onClick={handleApi}>bvbjdb</button> */}
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
         <div className="md:flex h-96 ">
           <div className="md:flex-shrink-0 w-full">
@@ -101,9 +122,7 @@ const Menu = () => {
           </div>
         </div>
         <div className="  rounded-3xl">
-          <div className="flex justify-start ml-16 text-white font-semibold">
-            <span className="text-xl mt-4 text-zinc-900">Menu </span>
-          </div>
+          
           <div className=" flex overflow-x-auto gap-4 p-4">
             {menuItems.map((restaurant: any) => (
               <div
