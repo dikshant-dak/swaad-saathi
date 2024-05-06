@@ -18,6 +18,12 @@ export class Items extends BaseEntity {
   name!: string
 
   @Column()
+  price!: number
+
+  @Column()
+  img!: string
+
+  @Column()
   type!: string
 
   @Column()

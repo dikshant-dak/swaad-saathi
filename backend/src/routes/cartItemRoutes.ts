@@ -9,9 +9,8 @@ router.use(cors())
 
 router.get('/cartItems', async (req, res) => {
   try {
-    const cities = await myDataSource.getRepository(CartItems).find({relations: ['items']})
-    res.json(cities)
-    console.log(cities)
+    const item = await myDataSource.getRepository(CartItems).find({relations: ['items']})
+    res.json(item)
   } catch (error) {
     console.error('Error fetching cities:', error)
     res.status(500).json({ error: 'Internal Server Error' })

@@ -21,7 +21,7 @@ const Header = () => {
       }
     }
     fetchData()
-  })
+  },[])
 
   useEffect(() => {
     if (showSearch) {

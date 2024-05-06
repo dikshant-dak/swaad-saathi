@@ -21,6 +21,7 @@ export default function Cart() {
 
     fetchData();
   }, []);
+  console.log(cart)
 
   const handleQuantityChange = (itemId, newQuantity) => {
     const updatedCart = cart.map((item) => {
@@ -71,7 +72,7 @@ export default function Cart() {
         <div className="w-2/3 pr-8">
           <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
           {cart.length > 0 ? (
-            cart.map((item) => (
+            cart.map((item:any) => (
               <motion.div
                 key={item.id}
                 className="bg-white rounded-lg shadow-md p-6 mb-8 flex items-start overflow-hidden"
@@ -79,7 +80,7 @@ export default function Cart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <img src={item.items.imageUrl} alt={item.items.name} className="w-32 h-32 rounded-lg object-cover mr-8" />
+                <img src={item.items.img} alt={item.items.name} className="w-64 h-32 rounded-lg object-cover mr-8" />
                 <div className="flex flex-col justify-between flex-1">
                   <div>
                     <p className="text-2xl font-bold text-gray-800 mb-4">{item.items.name}</p>
