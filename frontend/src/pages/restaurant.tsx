@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Rating from 'react-rating-stars-component'
 
@@ -78,8 +79,8 @@ export default function Restaurant() {
           {selectedCityName} Restaurants
         </h1>
         <h3 className="mt-2 flex gap-2">
-          <p className='font-bold text-red-700'>{fliteredRestaurants.length}</p>
-            <span className="text-gray-600"> restaurants found....</span>
+          <p className="font-bold text-red-700">{fliteredRestaurants.length}</p>
+          <span className="text-gray-600"> restaurants found....</span>
         </h3>
       </div>
       <main className="container mx-auto flex justify-center">
@@ -113,9 +114,11 @@ export default function Restaurant() {
                       activeColor="#ffd700"
                       edit={false}
                     />
-                    <button className="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                      Order Now
-                    </button>
+                    <Link href={`/menuOfRestaurant/${restaurant.id}`}>
+                      <button className="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                        Order Now
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
