@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -17,11 +18,15 @@ const RegistrationPage = () => {
       [name]: value
     }))
   }
-  
+  const router = useRouter()
+  const [loading, setLoading] = useState(false) 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
+      setLoading(true) 
+
       const response = await fetch('http://localhost:4000/register', {
         method: 'POST',
         headers: {
@@ -32,11 +37,16 @@ const RegistrationPage = () => {
 
       if (response.ok) {
         console.log('Registration successful')
+        router.push('/')
+        // alert('Registration successful!')
       } else {
         console.error('Registration failed')
+        alert('Something Wrong With Registration!')
       }
     } catch (error) {
       console.error('Error registering:', error)
+    }finally {
+      setLoading(false) 
     }
   }
   return (
@@ -128,7 +138,7 @@ const RegistrationPage = () => {
                   className="bg-blue-500 text-white py-2 px-6 rounded-xl shadow-lg hover:bg-blue-300 focus:bg-blue-100 focus:ring-0 mr-8"
                   onClick={handleSubmit}
                 >
-                  Register
+                  {loading ? 'Loading...' : 'Register'}
                 </button>
               </div>
             </div>

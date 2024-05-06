@@ -5,11 +5,37 @@ import ProductCategory from '@/components/ProductCategory'
 import Toprestaurant from '@/components/Toprestaurant'
 import Image from 'next/image'
 import  headerImage  from '../images/Header.png'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-const hello = () => {
+const Hello = () => {
+  const router = useRouter()
+  const { id } = router.query 
+  const [customer, setCustomer] = useState(null)
+
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/customers/${id}`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch customer')
+        }
+        const data = await response.json()
+        setCustomer(data)
+      } catch (error) {
+        console.error('Error fetching customer:', error)
+      }
+    }
+
+    if (id) {
+      fetchCustomer()
+    }
+  }, [id])
+  console.log("customer", customer)
+
   return (
     <>
-      <Header />
+      <Header customer={customer}/>
       <div className="flex justify-center my-16">
         <Image src={headerImage} height={600} width={1000} alt="test" />
       </div>
@@ -51,4 +77,4 @@ const hello = () => {
   )
 }
 
-export default hello
+export default Hello

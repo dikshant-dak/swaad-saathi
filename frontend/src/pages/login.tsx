@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
+  const router = useRouter()
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -25,8 +27,14 @@ export default function Login() {
         },
         body: JSON.stringify(formData)
       })
+      console.log("___________________",response)
       if (response.ok) {
-        console.log('Login successful')
+        const data = await response.json()
+         console.log('Login successful',formData)
+           const queryParams = new URLSearchParams({
+             id: data.user.id
+           }).toString()
+           router.push(`/?${queryParams}`)
       } else {
         console.error('Login failed')
       }
