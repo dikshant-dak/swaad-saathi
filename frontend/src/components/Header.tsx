@@ -1,14 +1,12 @@
-import { useAuthState } from '@/lib/state/auth';
-import axios from 'axios';
-import Image from 'next/image';
+import { useAuthState } from '@/lib/state/auth'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { FiShoppingCart } from 'react-icons/fi'
 import { IoIosSearch } from 'react-icons/io'
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout } from 'react-icons/md'
 
 const Header = ({ customerData }: { customerData: any }) => {
-  const { authState, setAuthState } = useAuthState();
+  const { authState, setAuthState } = useAuthState()
   const [showSearch, setShowSearch] = useState(false)
   const [underlinedOption, setUnderlinedOption] = useState('')
   const [restaurants, setRestaurants] = useState<any>([])
@@ -26,7 +24,7 @@ const Header = ({ customerData }: { customerData: any }) => {
       }
     }
     fetchData()
-  },[])
+  }, [])
 
   useEffect(() => {
     if (showSearch) {
@@ -63,16 +61,16 @@ const Header = ({ customerData }: { customerData: any }) => {
   //   }
   // };
   const handleLogout = async () => {
-    window.location.href = "/";
+    window.location.href = '/'
     setAuthState((prevState: any) => {
       const newState = {
         ...prevState,
         loggedIn: false,
-        customerId: null,
-      };
-      localStorage.setItem("authState", JSON.stringify(newState));
-      return newState;
-    });
+        customerId: null
+      }
+      localStorage.setItem('authState', JSON.stringify(newState))
+      return newState
+    })
   }
 
   return (
@@ -159,30 +157,29 @@ const Header = ({ customerData }: { customerData: any }) => {
             onClick={() => {
               setShowSearch(!showSearch)
             }}
-            className="text-red-700 font-bold hover:cursor-pointer"
+            className="text-red-700 font-bold hover:cursor-pointer mr-5"
           />
           {authState.loggedIn === false ? (
             <>
-            <Link href="/login">
-            <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
-              Log in
-            </button>
-          </Link>
-          <Link href="/registration">
-            <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
-              Sign up
-            </button>
-          </Link>
-            </>
-           ) : (
-              <>
-                <h2>Hi, {customerData?.firstName}</h2>
-                <button onClick={handleLogout}>
-                  <MdOutlineLogout size={25} />
+              <Link href="/login">
+                <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
+                  Log in
                 </button>
-              </>
-            )}
-          
+              </Link>
+              <Link href="/registration">
+                <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
+                  Sign up
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <h2>Hi, {customerData?.firstName}</h2>
+              <button onClick={handleLogout}>
+                <MdOutlineLogout size={25} />
+              </button>
+            </>
+          )}
         </div>
       </div>
       {searchQuery && (

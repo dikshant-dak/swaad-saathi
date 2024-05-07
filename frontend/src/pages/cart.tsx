@@ -9,15 +9,20 @@ import { motion } from 'framer-motion'
 export default function Cart() {
   const [cart, setCart] = useState<any>([])
   const { authState } = useAuthState()
+  const [showPayment, setShowPayment] = useState(false)
   const [customerData, setCustomerData] = useState<any>(null)
   const [loading, setIsLoading] = useState(true)
   // const history = useHistory();
   const [totalAmount, setTotalAmount] = useState(0)
 
+  console.log(cart)
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:4000/cartItems/${authState.customerId}`);
+        const response = await fetch(
+          `http://localhost:4000/cartItems/${authState.customerId}`
+        )
         const result = await response.json()
         setCart(result)
       } catch (error) {
@@ -27,7 +32,7 @@ export default function Cart() {
 
     fetchData()
   }, [authState.customerId])
-// console.log()
+  // console.log()
 
   const checout = async () => {
     try {
@@ -45,7 +50,7 @@ export default function Cart() {
         })
       })
       const data = await res.json()
-      console.log("data-------------", data)
+      console.log('data-------------', data)
       window.location.href = data.url
     } catch (error) {}
   }
@@ -64,43 +69,40 @@ export default function Cart() {
           deliveryAddress: '123, New York',
           discountAmount: 5,
           customerId: authState.customerId,
-          orderItems: cart.map((item:any) => ({
+          orderItems: cart.map((item: any) => ({
             itemsId: item.items.id,
             quantity: item.quantity
           }))
         })
       })
       const data = await response.json()
-      if (data) {
-        window.alert('Order Placed Successfully')
-      }
     } catch (error) {
       console.log('Error adding item:', error)
     }
   }
 
-  const handleQuantityChange = (itemId:any, newQuantity:any) => {
-    const updatedCart = cart.map((item:any) => {
+  const handleQuantityChange = (itemId: any, newQuantity: any) => {
+    const updatedCart = cart.map((item: any) => {
       if (item.id === itemId) {
         return { ...item, quantity: newQuantity }
       }
       return item
     })
-    setCart(updatedCart)
+    setCart(updatedCart as any)
   }
 
-  const handleIncreaseQuantity = (itemId:any) => {
-    const updatedCart = cart.map((item:any) => {
+  const handleIncreaseQuantity = (itemId: any) => {
+    const updatedCart = cart.map((item: any) => {
       if (item.id === itemId) {
         return { ...item, quantity: item.quantity + 1 }
       }
       return item
     })
-    setCart(updatedCart)
+    setCart(updatedCart as any)
   }
 
-  const handleDecreaseQuantity = (itemId:any) => {
-    const updatedCart = cart.map((item:any) => {
+  const handleDecreaseQuantity = (itemId: any) => {
+    const updatedCart = cart.map((item: any) => {
       if (item.id === itemId && item.quantity > 1) {
         return { ...item, quantity: item.quantity - 1 }
       }
@@ -110,14 +112,14 @@ export default function Cart() {
   }
 
   const handleRemoveItem = (itemId: any) => {
-    const updatedCart = cart.filter((item:any) => item.id !== itemId)
+    const updatedCart = cart.filter((item: any) => item.id !== itemId)
     setCart(updatedCart)
   }
 
   // Calculate total amount
   const getTotalAmount = () => {
     return cart.reduce(
-      (total:any, item:any) => total + item.quantity * item.items.price,
+      (total: any, item: any) => total + item.quantity * item.items.price,
       0
     )
   }
@@ -228,10 +230,21 @@ export default function Cart() {
             </div>
             <button
               className="w-full bg-red-500 text-white py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-              onClick={handelChange}
+              onClick={() => {
+                setShowPayment(true)
+                handelChange()
+              }}
             >
               PROCEED TO CHECKOUT
             </button>
+            {showPayment && (
+              <button
+                className="w-full bg-blue-500 text-white py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+                onClick={() => checout()}
+              >
+                PAY NOW
+              </button>
+            )}
           </div>
         </div>
       </div>

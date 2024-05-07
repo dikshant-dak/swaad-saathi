@@ -1,10 +1,10 @@
-import express from "express"
-import { myDataSource } from "../../app-data-source"
-import { Order } from "../entity/order.entity"
-import { OrderItem } from "../entity/orderItems.entity"
 import dotenv from 'dotenv'
-import { CartItems } from "../entity/cartItems.entity"
+import express from 'express'
 import Stripe from 'stripe'
+import { myDataSource } from '../../app-data-source'
+import { CartItems } from '../entity/cartItems.entity'
+import { Order } from '../entity/order.entity'
+import { OrderItem } from '../entity/orderItems.entity'
 
 dotenv.config()
 const stripeSecretKey = process.env.SECRET_STRIPE_KEY || ''
@@ -14,7 +14,9 @@ const router = express.Router()
 
 router.get('/orders', async (req, res) => {
   try {
-    const orders = await myDataSource.getRepository(Order).find({relations: ['orderItems','customer','orderItems.items']})
+    const orders = await myDataSource
+      .getRepository(Order)
+      .find({ relations: ['orderItems', 'customer', 'orderItems.items'] })
     res.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -31,19 +33,20 @@ router.post('/checkout', async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'T-shirt'
+              name: 'Maggi Noodles'
             },
-            unit_amount: 2000
+            unit_amount: 8000
           },
           quantity: 1
         }
       ],
       mode: 'payment',
-      success_url: 'http://localhost:3000/',
-      cancel_url: 'http://localhost:3000/restaurant'
+
+      success_url: 'http://localhost:3000/Success',
+      cancel_url: 'http://localhost:3000/Failure'
     })
     res.json({ url: session.url })
-    console.log("Session ID: ", session.id)
+    console.log('Session ID: ', session.id)
   } catch (error) {
     console.error('Error creating checkout session:', error)
     res.status(500).json({ error: error })
@@ -56,7 +59,7 @@ router.get('/orders/:id', async (req, res) => {
       where: {
         customerId: req.params.id
       },
-      relations: ['orderItems','orderItems.items']
+      relations: ['orderItems', 'orderItems.items']
     })
     if (!order) {
       return res.status(404).json({ error: 'Order not found' })
@@ -76,15 +79,17 @@ router.post('/orders', async (req, res) => {
       totalPrice: req.body.totalPrice,
       deliveryAddress: req.body.deliveryAddress,
       discountAmount: req.body.discountAmount,
-      customerId: req.body.customerId,
+      customerId: req.body.customerId
     })
-    const orderItems = req.body.orderItems.map((orderItem:any) => ({
+    const orderItems = req.body.orderItems.map((orderItem: any) => ({
       ...orderItem,
       orderId: newOrder.id
     }))
     await myDataSource.getRepository(OrderItem).save(orderItems)
 
-    await myDataSource.getRepository(CartItems).delete({customerId: req.body.customerId})
+    await myDataSource
+      .getRepository(CartItems)
+      .delete({ customerId: req.body.customerId })
     res.json(orderItems)
   } catch (error) {
     console.error('Error adding order:', error)
