@@ -46,9 +46,9 @@ const Hello = () => {
         </span>
         <div className="flex flex-wrap gap-16 justify-center my-8">
           <ProductCategory />
+          {/* <ProductCategory />
           <ProductCategory />
-          <ProductCategory />
-          <ProductCategory />
+          <ProductCategory /> */}
         </div>
       </div>
 
