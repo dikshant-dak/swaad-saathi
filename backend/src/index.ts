@@ -6,6 +6,7 @@ import customerRoutes from './routes/customerRoutes';
 import itemRoutes from './routes/itemRoutes';
 import orderRoutes from './routes/orderRoutes';
 import restaurantRoutes from './routes/restaurantRoutes';
+import cartItemRoutes from './routes/cartItemRoutes';
 import authRoutes from './routes/authRoutes';
 
 myDataSource
@@ -35,7 +36,7 @@ app.use(async (req, res, next) => {
   }
 })
 
-app.use("/", customerRoutes,restaurantRoutes,cityRoutes,itemRoutes, orderRoutes);
+app.use("/", customerRoutes,restaurantRoutes,cityRoutes,itemRoutes, orderRoutes,cartItemRoutes);
 app.use("/auth", authRoutes);
 
 app.listen(PORT, async () => {

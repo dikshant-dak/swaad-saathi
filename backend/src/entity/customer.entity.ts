@@ -1,5 +1,6 @@
 
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from './order.entity';
 
 @Entity()
 export class Customer extends BaseEntity {
@@ -24,4 +25,7 @@ export class Customer extends BaseEntity {
 
   @Column({ nullable: true })
   phone!: string
+
+  @OneToMany(() => Order, order => order.customer)
+  orders!: Order[]
 }

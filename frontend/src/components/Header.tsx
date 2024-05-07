@@ -1,12 +1,13 @@
 import { useAuthState } from '@/lib/state/auth';
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
+import { FiShoppingCart } from 'react-icons/fi'
 import { IoIosSearch } from 'react-icons/io'
 
 const Header = ({ customerData }: { customerData: any }) => {
   const { authState, setAuthState } = useAuthState();
   const [showSearch, setShowSearch] = useState(false)
-  const [underlinedOption, setUnderlinedOption] = useState('home')
+  const [underlinedOption, setUnderlinedOption] = useState('')
   const [restaurants, setRestaurants] = useState<any>([])
   const [searchQuery, setSearchQuery] = useState('')
   const inputSearch = useRef<HTMLInputElement>(null)
@@ -22,7 +23,7 @@ const Header = ({ customerData }: { customerData: any }) => {
       }
     }
     fetchData()
-  })
+  },[])
 
   useEffect(() => {
     if (showSearch) {
@@ -33,7 +34,7 @@ const Header = ({ customerData }: { customerData: any }) => {
   const filteredRestaurants = restaurants.filter((restaurant: any) =>
     restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
-
+  console.log(underlinedOption)
   return (
     <div
       style={{
