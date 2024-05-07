@@ -1,29 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 // import { useHistory } from 'react-router-dom';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { motion } from 'framer-motion';
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
+import { useAuthState } from '@/lib/state/auth'
+import axios from 'axios'
+import { motion } from 'framer-motion'
 
 export default function Cart() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([])
+  const { authState } = useAuthState()
+  const [customerData, setCustomerData] = useState(null)
+  const [loading, setIsLoading] = useState(true)
   // const history = useHistory();
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:4000/cartItems');
-        const result = await response.json();
-        setCart(result);
+        const response = await fetch('http://localhost:4000/cartItems')
+        const result = await response.json()
+        setCart(result)
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
     }
 
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  const handelChange = async() => {
+  const handelChange = async () => {
     try {
       const response = await fetch('http://localhost:4000/orders', {
         method: 'POST',
@@ -33,75 +38,99 @@ export default function Cart() {
         body: JSON.stringify({
           orderDate: new Date(),
           status: 'pending',
-          totalPrice:totalAmount+5,
+          totalPrice: totalAmount + 5,
           deliveryAddress: '123, New York',
-          discountAmount:5,
-          customerId: '2ce79006-7213-48a9-845a-496126154b46',
-          orderItems: cart.map((item) => ({
+          discountAmount: 5,
+          customerId: customerData?.id,
+          orderItems: cart.map(item => ({
             itemsId: item.items.id,
             quantity: item.quantity
           }))
         })
       })
       const data = await response.json()
+      if (data) {
+        window.alert('Order Placed Successfully')
+      }
     } catch (error) {
       console.log('Error adding item:', error)
     }
   }
 
   const handleQuantityChange = (itemId, newQuantity) => {
-    const updatedCart = cart.map((item) => {
+    const updatedCart = cart.map(item => {
       if (item.id === itemId) {
-        return { ...item, quantity: newQuantity };
+        return { ...item, quantity: newQuantity }
       }
-      return item;
-    });
-    setCart(updatedCart);
-  };
+      return item
+    })
+    setCart(updatedCart)
+  }
 
-  const handleIncreaseQuantity = (itemId) => {
-    const updatedCart = cart.map((item) => {
+  const handleIncreaseQuantity = itemId => {
+    const updatedCart = cart.map(item => {
       if (item.id === itemId) {
-        return { ...item, quantity: item.quantity + 1 };
+        return { ...item, quantity: item.quantity + 1 }
       }
-      return item;
-    });
-    setCart(updatedCart);
-  };
+      return item
+    })
+    setCart(updatedCart)
+  }
 
-  const handleDecreaseQuantity = (itemId) => {
-    const updatedCart = cart.map((item) => {
+  const handleDecreaseQuantity = itemId => {
+    const updatedCart = cart.map(item => {
       if (item.id === itemId && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
+        return { ...item, quantity: item.quantity - 1 }
       }
-      return item;
-    });
-    setCart(updatedCart);
-  };
+      return item
+    })
+    setCart(updatedCart as any)
+  }
 
-  const handleRemoveItem = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
-  };
+  const handleRemoveItem = (itemId: any) => {
+    const updatedCart = cart.filter(item => item.id !== itemId)
+    setCart(updatedCart)
+  }
 
   // Calculate total amount
   const getTotalAmount = () => {
-    return cart.reduce((total, item) => total + item.quantity * item.items.price, 0);
-  };
+    return cart.reduce(
+      (total, item) => total + item.quantity * item.items.price,
+      0
+    )
+  }
   // console.log(totalAmount)
   useEffect(() => {
-    const total = getTotalAmount();
-    setTotalAmount(total);
-  }, [cart, getTotalAmount]);
-  
+    const total = getTotalAmount()
+    setTotalAmount(total)
+  }, [cart, getTotalAmount])
+
+  useEffect(() => {
+    setIsLoading(false)
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then(res => {
+          setCustomerData(res.data)
+        })
+        .catch(err => {
+          console.log('Error in displaying customer data', err)
+        })
+    }
+  }, [authState.customerId, authState.loggedIn])
+
+  if (loading) {
+    return <div className="text-white">Loading...</div>
+  }
+
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       <div className="container mx-auto px-6 py-8 flex">
         <div className="w-2/3 pr-8">
           <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
           {cart.length > 0 ? (
-            cart.map((item:any) => (
+            cart.map((item: any) => (
               <motion.div
                 key={item.id}
                 className="bg-white rounded-lg shadow-md p-6 mb-8 flex items-start overflow-hidden"
@@ -109,19 +138,44 @@ export default function Cart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <img src={item.items.img} alt={item.items.name} className="w-64 h-32 rounded-lg object-cover mr-8" />
+                <img
+                  src={item.items.img}
+                  alt={item.items.name}
+                  className="w-64 h-32 rounded-lg object-cover mr-8"
+                />
                 <div className="flex flex-col justify-between flex-1">
                   <div>
-                    <p className="text-2xl font-bold text-gray-800 mb-4">{item.items.name}</p>
-                    <p className="text-sm text-gray-600 mb-2">Type: {item.items.type}</p>
-                    <p className="text-sm text-gray-600 mb-4">{item.items.description}</p>
+                    <p className="text-2xl font-bold text-gray-800 mb-4">
+                      {item.items.name}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-2">
+                      Type: {item.items.type}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-4">
+                      {item.items.description}
+                    </p>
                     <p className="text-lg font-bold">${item.items.price}</p>
                   </div>
                   <div className="flex items-center mt-6">
-                    <button className="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4" onClick={() => handleDecreaseQuantity(item.id)}>-</button>
+                    <button
+                      className="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center mr-4"
+                      onClick={() => handleDecreaseQuantity(item.id)}
+                    >
+                      -
+                    </button>
                     <p className="text-lg font-bold mr-4">{item.quantity}</p>
-                    <button className="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center" onClick={() => handleIncreaseQuantity(item.id)}>+</button>
-                    <button className="text-red-500 ml-auto" onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                    <button
+                      className="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center"
+                      onClick={() => handleIncreaseQuantity(item.id)}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="text-red-500 ml-auto"
+                      onClick={() => handleRemoveItem(item.id)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -161,5 +215,5 @@ export default function Cart() {
       </div>
       <Footer />
     </>
-  );
+  )
 }
