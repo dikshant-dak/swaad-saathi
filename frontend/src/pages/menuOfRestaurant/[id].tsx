@@ -55,7 +55,6 @@ const Menu = () => {
       fetchMenuItems();
     }
   }, [id]);
-  console.log(menuItems);
 
   const handleAddToCart = async (id: any) => {
     console.log(id, quantities[id] || 1);
@@ -93,6 +92,29 @@ const Menu = () => {
 
   if (isLoading) {
     return <div className="text-white">Loading...</div>;
+  }
+  if(menuItems.length === 0) {
+  
+    return (
+      <>
+      <Header customerData={customerData} />
+      <div 
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          fontSize: '1.5em',
+          color: '#333',
+          backgroundColor: '#f2f2f2'
+        }}
+      >
+        No Data Found
+      </div>
+      <Footer />
+      </>
+    );
+   
   }
   return (
     <>
