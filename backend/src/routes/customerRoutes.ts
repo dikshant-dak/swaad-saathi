@@ -59,9 +59,6 @@ router.post('/login', async (req, res) => {
   }
 })
 
-
-
-
 router.get('/customers', async (req, res) => {
   try {
     const customers = await myDataSource.getRepository(Customer).find()

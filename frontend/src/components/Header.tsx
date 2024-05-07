@@ -1,8 +1,10 @@
+import { useAuthState } from '@/lib/state/auth';
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 
-const Header = () => {
+const Header = ({ customerData }: { customerData: any }) => {
+  const { authState, setAuthState } = useAuthState();
   const [showSearch, setShowSearch] = useState(false)
   const [underlinedOption, setUnderlinedOption] = useState('home')
   const [restaurants, setRestaurants] = useState<any>([])
@@ -119,7 +121,9 @@ const Header = () => {
             }}
             className="text-red-700 font-bold hover:cursor-pointer"
           />
-          <Link href="/login">
+          {authState.loggedIn === false ? (
+            <>
+            <Link href="/login">
             <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
               Log in
             </button>
@@ -129,6 +133,13 @@ const Header = () => {
               Sign up
             </button>
           </Link>
+            </>
+           ) : (
+              <>
+              <h2>Hi, {customerData?.firstName}</h2>
+              </>
+            )}
+          
         </div>
       </div>
       {searchQuery && (

@@ -19,7 +19,7 @@ const Toprestaurant = () => {
   const highRating = restaurants.filter(
     (restaurant: any) => restaurant.rating > 4.5
   )
-  console.log(highRating.slice(0, 12))
+  // console.log(highRating.slice(0, 12))
   return (
     <div className="bg-red-700 mr-10 rounded-r-3xl">
       <div className="flex justify-start ml-16 text-white mt-3 font-semibold">
