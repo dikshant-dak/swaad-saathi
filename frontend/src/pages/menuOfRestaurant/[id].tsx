@@ -14,19 +14,19 @@ import axios from 'axios'
 const Menu = () => {
   // // State to store menu items
   const [menuItems, setMenuItems] = useState([])
-  const [quantities, setQuantities] = useState({});
+  const [quantities, setQuantities] = useState<any>({});
   const [customerData, setCustomerData] = useState<any>(null);
   console.log(customerData)
   const { authState } = useAuthState();
   const [isLoading, setIsLoading] = useState(true)
   // console.log(quantity)
   const handleChangeQuantity = (id:any, change:any) => {
-    setQuantities(prev => ({
+    setQuantities((prev:any) => ({
       ...prev,
       [id]: (prev[id] || 1) + change
     }));
   };
-  const [showGoToCart, setShowGoToCart] = useState({});
+  const [showGoToCart, setShowGoToCart] = useState<any>({});
 
 
   const [restaurant, setrestaurant] = useState([])
@@ -72,7 +72,7 @@ const Menu = () => {
           customerId: authState.customerId
         })
       })
-      setShowGoToCart(prevState => ({ ...prevState, [id]: true }));
+      setShowGoToCart((prevState:any) => ({ ...prevState, [id]: true }));
       const data = await response.json()
     } catch (error) {
       console.log('Error adding item:', error)
