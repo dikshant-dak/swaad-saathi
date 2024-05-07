@@ -1,18 +1,39 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import { useAuthState } from '@/lib/state/auth'
+import axios from 'axios'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Rating from 'react-rating-stars-component'
+import Image from 'next/image'
 
 export default function Restaurant() {
   const [restaurants, setRestaurants] = useState<any>([])
   const [isLoading, setIsLoading] = useState(true)
   const [city, setCity] = useState<any>([])
+  const { authState } = useAuthState();
+  const [customerData, setCustomerData] = useState(null);
   const [selectedCity, setSelectedCity] = useState(
     '03e46085-f0f7-4a76-a82d-13a6e93db9e7'
   )
   const [selectedCityName, setSelectedCityName] = useState('Udaipur')
   // console.log(restaurants[0].city)
+
+  useEffect(() => {
+    setIsLoading(false);
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then((res) => {
+          setCustomerData(res.data);
+        })
+        .catch((err) => {
+          console.log("Error in displaying customer data", err);
+        });
+    }
+  }, [authState.customerId, authState.loggedIn]);
+
+
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true)
@@ -52,7 +73,7 @@ export default function Restaurant() {
   }
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       <div className="flex justify-between mx-20">
         {city.map((city: any) => (
           <div key={city.id}>
@@ -92,10 +113,12 @@ export default function Restaurant() {
             >
               <div className="grid grid-cols-2 ">
                 <div className="">
-                  <img
+                  <Image
                     src={restaurant.img}
                     alt={restaurant.name}
                     className="w-full h-48 object-cover"
+                    width={300}
+                    height={200}
                   />
                 </div>
                 <div className="p-4">
