@@ -2,6 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import { myDataSource } from '../../app-data-source'
 import { Restaurant } from '../entity/restaurant.entity'
+import { Items } from '../entity/items.entity'
 
 const router = express.Router()
 router.use(cors())
@@ -44,4 +45,7 @@ router.get('/allrestaurants', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
+
+
+
 export default router
