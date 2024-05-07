@@ -46,7 +46,7 @@ router.get('/orders/:id', async (req, res) => {
   try {
     const order = await myDataSource.getRepository(Order).findOne({
       where: {
-        id: req.params.id
+        customerId: req.params.id
       }
     })
     if (!order) {
