@@ -15,7 +15,7 @@ const Menu = () => {
   // // State to store menu items
   const [menuItems, setMenuItems] = useState([])
   const [quantities, setQuantities] = useState({});
-  const [customerData, setCustomerData] = useState(null);
+  const [customerData, setCustomerData] = useState<any>(null);
   console.log(customerData)
   const { authState } = useAuthState();
   const [isLoading, setIsLoading] = useState(true)
