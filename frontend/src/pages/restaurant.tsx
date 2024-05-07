@@ -14,7 +14,7 @@ export default function Restaurant() {
   const [selectedCityName, setSelectedCityName] = useState('Udaipur')
   // console.log(restaurants[0].city)
   useEffect(() => {
-    async function fetchData() {
+    async function fetchRestroData() {
       setIsLoading(true)
       try {
         const response = await fetch('http://localhost:4000/allrestaurants')
@@ -26,10 +26,6 @@ export default function Restaurant() {
       setIsLoading(false)
     }
 
-    fetchData()
-  }, [])
-  console.log(selectedCity)
-  useEffect(() => {
     async function fetchData() {
       try {
         const response = await fetch('http://localhost:4000/cities')
@@ -40,6 +36,7 @@ export default function Restaurant() {
       }
     }
 
+    fetchRestroData()
     fetchData()
   }, [])
 
@@ -60,8 +57,8 @@ export default function Restaurant() {
               className="px-6 py-2 bg-gray-200 text-red-900 rounded-3xl my-6 font-semibold shadow-lg"
               style={{
                 backgroundColor:
-                  selectedCity === city?.id ? '#FF0000' : '#f9fafb',
-                color: selectedCity === city?.id ? '#f9fafb' : '#FF0000'
+                  selectedCity === city?.id ? '#b91c1c' : '#f9fafb',
+                color: selectedCity === city?.id ? '#f9fafb' : '#b91c1c'
               }}
               onClick={() => {
                 setSelectedCity(city?.id)
