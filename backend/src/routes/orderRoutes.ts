@@ -3,6 +3,7 @@ import { myDataSource } from "../../app-data-source"
 import { Order } from "../entity/order.entity"
 import { OrderItem } from "../entity/orderItems.entity"
 import dotenv from 'dotenv'
+import { CartItems } from "../entity/cartItems.entity"
 
 dotenv.config()
 
@@ -50,10 +51,11 @@ router.post('/checkout', async (req, res) => {
 
 router.get('/orders/:id', async (req, res) => {
   try {
-    const order = await myDataSource.getRepository(Order).findOne({
+    const order = await myDataSource.getRepository(Order).find({
       where: {
         customerId: req.params.id
-      }
+      },
+      relations: ['orderItems','orderItems.items']
     })
     if (!order) {
       return res.status(404).json({ error: 'Order not found' })
@@ -67,7 +69,6 @@ router.get('/orders/:id', async (req, res) => {
 
 router.post('/orders', async (req, res) => {
   try {
-    console.log(req.body)
     const newOrder = await myDataSource.getRepository(Order).save({
       orderDate: req.body.orderDate,
       status: req.body.status,
@@ -81,6 +82,8 @@ router.post('/orders', async (req, res) => {
       orderId: newOrder.id
     }))
     await myDataSource.getRepository(OrderItem).save(orderItems)
+
+    await myDataSource.getRepository(CartItems).delete({customerId: req.body.customerId})
     res.json(orderItems)
   } catch (error) {
     console.error('Error adding order:', error)

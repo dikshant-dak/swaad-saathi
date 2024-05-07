@@ -7,7 +7,7 @@ import axios from 'axios'
 import { motion } from 'framer-motion'
 
 export default function Cart() {
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState<any>([])
   const { authState } = useAuthState()
   const [customerData, setCustomerData] = useState<any>(null)
   const [loading, setIsLoading] = useState(true)
@@ -63,7 +63,7 @@ export default function Cart() {
           deliveryAddress: '123, New York',
           discountAmount: 5,
           customerId: authState.customerId,
-          orderItems: cart.map(item => ({
+          orderItems: cart.map((item:any) => ({
             itemsId: item.items.id,
             quantity: item.quantity
           }))
@@ -78,8 +78,8 @@ export default function Cart() {
     }
   }
 
-  const handleQuantityChange = (itemId, newQuantity) => {
-    const updatedCart = cart.map(item => {
+  const handleQuantityChange = (itemId:any, newQuantity:any) => {
+    const updatedCart = cart.map((item:any) => {
       if (item.id === itemId) {
         return { ...item, quantity: newQuantity }
       }
@@ -88,8 +88,8 @@ export default function Cart() {
     setCart(updatedCart)
   }
 
-  const handleIncreaseQuantity = itemId => {
-    const updatedCart = cart.map(item => {
+  const handleIncreaseQuantity = (itemId:any) => {
+    const updatedCart = cart.map((item:any) => {
       if (item.id === itemId) {
         return { ...item, quantity: item.quantity + 1 }
       }
@@ -98,8 +98,8 @@ export default function Cart() {
     setCart(updatedCart)
   }
 
-  const handleDecreaseQuantity = itemId => {
-    const updatedCart = cart.map(item => {
+  const handleDecreaseQuantity = (itemId:any) => {
+    const updatedCart = cart.map((item:any) => {
       if (item.id === itemId && item.quantity > 1) {
         return { ...item, quantity: item.quantity - 1 }
       }
@@ -109,14 +109,14 @@ export default function Cart() {
   }
 
   const handleRemoveItem = (itemId: any) => {
-    const updatedCart = cart.filter(item => item.id !== itemId)
+    const updatedCart = cart.filter((item:any) => item.id !== itemId)
     setCart(updatedCart)
   }
 
   // Calculate total amount
   const getTotalAmount = () => {
     return cart.reduce(
-      (total, item) => total + item.quantity * item.items.price,
+      (total:any, item:any) => total + item.quantity * item.items.price,
       0
     )
   }
@@ -227,7 +227,7 @@ export default function Cart() {
             </div>
             <button
               className="w-full bg-red-500 text-white py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-              onClick={checout}
+              onClick={handelChange}
             >
               PROCEED TO CHECKOUT
             </button>
