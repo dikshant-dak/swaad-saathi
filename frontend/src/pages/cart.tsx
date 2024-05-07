@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 export default function Cart() {
   const [cart, setCart] = useState([]);
   // const history = useHistory();
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -21,7 +22,32 @@ export default function Cart() {
 
     fetchData();
   }, []);
-  console.log(cart)
+
+  const handelChange = async() => {
+    try {
+      const response = await fetch('http://localhost:4000/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderDate: new Date(),
+          status: 'pending',
+          totalPrice:totalAmount+5,
+          deliveryAddress: '123, New York',
+          discountAmount:5,
+          customerId: '2ce79006-7213-48a9-845a-496126154b46',
+          orderItems: cart.map((item) => ({
+            itemId: item.items.id,
+            quantity: item.quantity
+          }))
+        })
+      })
+      const data = await response.json()
+    } catch (error) {
+      console.log('Error adding item:', error)
+    }
+  }
 
   const handleQuantityChange = (itemId, newQuantity) => {
     const updatedCart = cart.map((item) => {
@@ -62,9 +88,12 @@ export default function Cart() {
   const getTotalAmount = () => {
     return cart.reduce((total, item) => total + item.quantity * item.items.price, 0);
   };
-
-  // Redirect to checkout page
-
+  // console.log(totalAmount)
+  useEffect(() => {
+    const total = getTotalAmount();
+    setTotalAmount(total);
+  }, [cart, getTotalAmount]);
+  
   return (
     <>
       <Header />
@@ -123,6 +152,7 @@ export default function Cart() {
             </div>
             <button
               className="w-full bg-red-500 text-white py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+              onClick={handelChange}
             >
               PROCEED TO CHECKOUT
             </button>

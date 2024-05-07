@@ -8,6 +8,7 @@ import {
 } from 'typeorm'
 import { Restaurant } from './restaurant.entity'
 import { CartItems } from './cartItems.entity'
+import { OrderItem } from './orderItems.entity'
 
 @Entity()
 export class Items extends BaseEntity {
@@ -40,4 +41,9 @@ export class Items extends BaseEntity {
 
   @OneToMany(() => CartItems, items => items.items)
   cartItems!: CartItems[]
+
+  @OneToMany(() => OrderItem, items => items.items)
+  orderItems!: OrderItem[]
+
+
 }

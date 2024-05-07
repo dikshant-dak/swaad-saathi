@@ -32,36 +32,12 @@ router.get('/orders/:id', async (req, res) => {
 })
 
 router.post('/orders', async (req, res) => {
-  const {
-    orderDate,
-    requiredDate,
-    status,
-    customerNumber,
-    totalPrice,
-    deliveryAddress,
-    paymentMethod,
-    paymentStatus
-  } = req.body
-
-  if (
-    !orderDate ||
-    !requiredDate ||
-    !status ||
-    !customerNumber ||
-    !totalPrice ||
-    !deliveryAddress ||
-    !paymentMethod ||
-    !paymentStatus
-  ) {
-    return res.status(400).json({ error: 'Please provide all required fields' })
-  }
-
   try {
-    const newOrder = await myDataSource.getRepository(Order).create(req.body)
-    const savedOrder = await myDataSource.getRepository(Order).save(newOrder)
-    res.status(201).json(savedOrder)
+    console.log(req.body)
+    // const newOrder = await myDataSource.getRepository(Order).save(req.body)
+    // res.json(newOrder)
   } catch (error) {
-    console.error('Error creating order:', error)
+    console.error('Error adding order:', error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
