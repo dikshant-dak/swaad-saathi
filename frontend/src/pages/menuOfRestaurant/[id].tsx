@@ -107,7 +107,7 @@ const Menu = () => {
 
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       {/* <button onClick={handleApi}>bvbjdb</button> */}
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
         <div className="md:flex h-96 ">

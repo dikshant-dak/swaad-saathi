@@ -10,7 +10,6 @@ const Header = ({ customerData }: { customerData: any }) => {
   const [restaurants, setRestaurants] = useState<any>([])
   const [searchQuery, setSearchQuery] = useState('')
   const inputSearch = useRef<HTMLInputElement>(null)
-  console.log('header ------=-  pe customer', customer)
 
   useEffect(() => {
     async function fetchData() {
@@ -60,7 +59,7 @@ const Header = ({ customerData }: { customerData: any }) => {
           >
             Home
           </Link>
-          {!customer ? (
+          {!customerData ? (
             <Link
               href="/"
               id="order"

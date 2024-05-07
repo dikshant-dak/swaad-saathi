@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useAuthState } from '@/lib/state/auth';
 
 export default function Login() {
-  const router = useRouter();
   const { authState, setAuthState } = useAuthState();
 
   const [formData, setFormData] = useState({

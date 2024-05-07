@@ -20,7 +20,6 @@ const RegistrationPage = () => {
       [name]: value
     }))
   }
-  const router = useRouter()
   const [loading, setLoading] = useState(false) 
 
   const handleSubmit = async (e: React.FormEvent) => {
