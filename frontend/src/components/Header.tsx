@@ -1,11 +1,10 @@
-import { useAuthState } from '@/lib/state/auth';
+import { useAuthState } from '@/lib/state/auth'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { FiShoppingCart } from 'react-icons/fi'
 import { IoIosSearch } from 'react-icons/io'
 
 const Header = ({ customerData }: { customerData: any }) => {
-  const { authState, setAuthState } = useAuthState();
+  const { authState, setAuthState } = useAuthState()
   const [showSearch, setShowSearch] = useState(false)
   const [underlinedOption, setUnderlinedOption] = useState('')
   const [restaurants, setRestaurants] = useState<any>([])
@@ -23,7 +22,7 @@ const Header = ({ customerData }: { customerData: any }) => {
       }
     }
     fetchData()
-  },[])
+  }, [])
 
   useEffect(() => {
     if (showSearch) {
@@ -119,27 +118,28 @@ const Header = ({ customerData }: { customerData: any }) => {
             onClick={() => {
               setShowSearch(!showSearch)
             }}
-            className="text-red-700 font-bold hover:cursor-pointer"
+            className="text-red-700 font-bold hover:cursor-pointer mr-5"
           />
           {authState.loggedIn === false ? (
             <>
-            <Link href="/login">
-            <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
-              Log in
-            </button>
-          </Link>
-          <Link href="/registration">
-            <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
-              Sign up
-            </button>
-          </Link>
+              <Link href="/login">
+                <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
+                  Log in
+                </button>
+              </Link>
+              <Link href="/registration">
+                <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
+                  Sign up
+                </button>
+              </Link>
             </>
-           ) : (
-              <>
-              <h2>Hi, {customerData?.firstName}</h2>
-              </>
-            )}
-          
+          ) : (
+            <div className="flex gap-2 items-center">
+              <h2 className="text-red-700 font-bold tracking-wider text-lg">
+                Hi!, {customerData?.firstName}
+              </h2>
+            </div>
+          )}
         </div>
       </div>
       {searchQuery && (
