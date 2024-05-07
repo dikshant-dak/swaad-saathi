@@ -155,19 +155,6 @@ const Menu = () => {
       console.log('Error adding item:', error)
     }
   }
-  useEffect(() => {
-    setIsLoading(false);
-    if (authState.loggedIn === true) {
-      axios
-        .get(`http://localhost:4000/customers/${authState.customerId}`)
-        .then((res) => {
-          setCustomerData(res.data);
-        })
-        .catch((err) => {
-          console.log("Error in displaying customer data", err);
-        });
-    }
-  }, [authState.customerId, authState.loggedIn]);
 
   if (isLoading) {
     return <div className="text-white">Loading...</div>;
