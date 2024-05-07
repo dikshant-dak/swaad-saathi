@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 export default function Cart() {
   const [cart, setCart] = useState([])
   const { authState } = useAuthState()
-  const [customerData, setCustomerData] = useState(null)
+  const [customerData, setCustomerData] = useState<any>(null)
   const [loading, setIsLoading] = useState(true)
   // const history = useHistory();
   const [totalAmount, setTotalAmount] = useState(0)
@@ -17,7 +17,7 @@ export default function Cart() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:4000/cartItems')
+        const response = await fetch(`http://localhost:4000/cartItems:${customerData?.id}`);
         const result = await response.json()
         setCart(result)
       } catch (error) {
@@ -26,7 +26,7 @@ export default function Cart() {
     }
 
     fetchData()
-  }, [])
+  }, [customerData?.id])
 
   const handelChange = async () => {
     try {

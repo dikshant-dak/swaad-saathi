@@ -7,9 +7,12 @@ import { CartItems } from '../entity/cartItems.entity'
 const router = express.Router()
 router.use(cors())
 
-router.get('/cartItems', async (req, res) => {
+router.get('/cartItems/:id', async (req, res) => {
   try {
-    const item = await myDataSource.getRepository(CartItems).find({relations: ['items']})
+      const customerId = req.params.id
+    const item = await myDataSource.getRepository(CartItems).find({
+      where: {customerId: customerId} ,
+      relations: ['items']})
     res.json(item)
   } catch (error) {
     console.error('Error fetching cities:', error)
