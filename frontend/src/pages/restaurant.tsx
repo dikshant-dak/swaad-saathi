@@ -32,7 +32,7 @@ export default function Restaurant() {
         });
     }
   }, [authState.customerId, authState.loggedIn]);
-
+  
 
   useEffect(() => {
     async function fetchRestroData() {

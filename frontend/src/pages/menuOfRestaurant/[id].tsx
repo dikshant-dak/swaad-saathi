@@ -8,11 +8,17 @@ import headerImage from '../images/Header.png'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Rating from 'react-rating-stars-component'
+import { useAuthState } from '@/lib/state/auth'
+import axios from 'axios'
 
 const Menu = () => {
   // // State to store menu items
   const [menuItems, setMenuItems] = useState([])
   const [quantities, setQuantities] = useState({});
+  const [customerData, setCustomerData] = useState(null);
+  console.log(customerData)
+  const { authState } = useAuthState();
+  const [isLoading, setIsLoading] = useState(true)
   // console.log(quantity)
   const handleChangeQuantity = (id:any, change:any) => {
     setQuantities(prev => ({
@@ -113,6 +119,7 @@ const Menu = () => {
       fetchMenuItems()
     }
   }, [id])
+  console.log(menuItems)
 
   const handleAddToCart = async(id: any) => {
     console.log(id, quantities[id] || 1)
@@ -124,7 +131,8 @@ const Menu = () => {
         },
         body: JSON.stringify({
           itemsId:id,
-          quantity: quantities[id] || 1
+          quantity: quantities[id] || 1,
+          customerId: customerData?.id
         })
       })
       const data = await response.json()
@@ -132,10 +140,26 @@ const Menu = () => {
       console.log('Error adding item:', error)
     }
   }
+  useEffect(() => {
+    setIsLoading(false);
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then((res) => {
+          setCustomerData(res.data);
+        })
+        .catch((err) => {
+          console.log("Error in displaying customer data", err);
+        });
+    }
+  }, [authState.customerId, authState.loggedIn]);
 
+  if (isLoading) {
+    return <div className="text-white">Loading...</div>;
+  }
   return (
     <>
-      <Header />
+      <Header customerData={customerData}/>
       {/* <button onClick={handleApi}>bvbjdb</button> */}
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
         <div className="md:flex h-96 ">
