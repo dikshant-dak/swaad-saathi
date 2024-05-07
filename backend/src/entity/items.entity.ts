@@ -3,9 +3,12 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm'
 import { Restaurant } from './restaurant.entity'
+import { CartItems } from './cartItems.entity'
+import { OrderItem } from './orderItems.entity'
 
 @Entity()
 export class Items extends BaseEntity {
@@ -14,6 +17,12 @@ export class Items extends BaseEntity {
 
   @Column()
   name!: string
+
+  @Column()
+  price!: number
+
+  @Column()
+  img!: string
 
   @Column()
   type!: string
@@ -29,4 +38,12 @@ export class Items extends BaseEntity {
 
   @ManyToOne(() => Restaurant, restaurant => restaurant.items)
   restaurant!: Restaurant
+
+  @OneToMany(() => CartItems, items => items.items)
+  cartItems!: CartItems[]
+
+  @OneToMany(() => OrderItem, items => items.items)
+  orderItems!: OrderItem[]
+
+
 }

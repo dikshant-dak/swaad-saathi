@@ -32,7 +32,7 @@ const ProductCard = () => {
       >
         <Image
          
-          src='../../images/1.jpg'
+          src='../images/Pizza.jpg'
           width="400"
           height="200"
           alt="name"

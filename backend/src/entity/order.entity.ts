@@ -1,4 +1,7 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Items } from "./items.entity";
+import { OrderItem } from "./orderItems.entity";
+import { Customer } from "./customer.entity";
 // import { Customer } from "./customer.entity";
 
 @Entity()
@@ -6,45 +9,27 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column()
   orderDate!: Date
 
-  @Column({ type: 'timestamp' })
-  requiredDate!: Date
-
-  @Column({ type: 'timestamp', nullable: true })
-  shippedDate!: Date | null
-
-  @Column({ type: 'varchar', length: 100 })
+  @Column()
   status!: string
 
-  @Column({ type: 'text', nullable: true })
-  comments!: string | null
-
-  @Column({ type: 'int' })
-  customerNumber!: number
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column()
   totalPrice!: number
 
   @Column({ type: 'text' })
   deliveryAddress!: string
 
-  @Column({ type: 'varchar', length: 50 })
-  paymentMethod!: string
+  @Column()
+  discountAmount!: number
+  
+  @OneToMany(() => OrderItem, items => items.order)
+  orderItems!: OrderItem[]
 
-  @Column({ type: 'varchar', length: 50 })
-  paymentStatus!: string
+  @Column()
+  customerId!: string
 
-  @Column({ type: 'text', nullable: true })
-  specialInstructions!: string | null
-
-  @Column({ type: 'boolean', default: false })
-  isGift!: boolean
-
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
-  discountAmount!: number | null
-
-  @Column({ type: 'varchar', length: 20, nullable: true })
-  discountCode!: string | null
+  @ManyToOne(() => Customer, customer => customer.orders)
+  customer!: Customer
 }

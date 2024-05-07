@@ -1,8 +1,9 @@
-import express from "express"
-import { myDataSource } from "../../app-data-source"
-import { Order } from "../entity/order.entity"
+import express from 'express'
+import { myDataSource } from '../../app-data-source'
+import { Order } from '../entity/order.entity'
 
 const router = express.Router()
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 router.get('/orders', async (req, res) => {
   try {
@@ -10,6 +11,32 @@ router.get('/orders', async (req, res) => {
     res.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
+router.get('/checkout', async (req, res) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'T-shirt'
+            },
+            unit_amount: 2000
+          },
+          quantity: 1
+        }
+      ],
+      mode: 'payment',
+      success_url: 'https://example.com/success',
+      cancel_url: 'https://example.com/cancel'
+    })
+    res.json({ id: session.id })
+  } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
@@ -32,36 +59,23 @@ router.get('/orders/:id', async (req, res) => {
 })
 
 router.post('/orders', async (req, res) => {
-  const {
-    orderDate,
-    requiredDate,
-    status,
-    customerNumber,
-    totalPrice,
-    deliveryAddress,
-    paymentMethod,
-    paymentStatus
-  } = req.body
-
-  if (
-    !orderDate ||
-    !requiredDate ||
-    !status ||
-    !customerNumber ||
-    !totalPrice ||
-    !deliveryAddress ||
-    !paymentMethod ||
-    !paymentStatus
-  ) {
-    return res.status(400).json({ error: 'Please provide all required fields' })
-  }
-
   try {
-    const newOrder = await myDataSource.getRepository(Order).create(req.body)
-    const savedOrder = await myDataSource.getRepository(Order).save(newOrder)
-    res.status(201).json(savedOrder)
+    console.log(req.body)
+    const newOrder = await myDataSource.getRepository(Order).save({
+      orderDate: req.body.orderDate,
+      status: req.body.status,
+      totalPrice: req.body.totalPrice,
+      deliveryAddress: req.body.deliveryAddress,
+      discountAmount: req.body.discountAmount,
+      customerId: req.body.customerId,
+    })
+    const orderItems = req.body.orderItems.map((orderItem:any) => ({
+      ...orderItem,
+      orderId: newOrder.id
+    }))
+    // res.json(newOrder)
   } catch (error) {
-    console.error('Error creating order:', error)
+    console.error('Error adding order:', error)
     res.status(500).json({ error: 'Internal Server Error' })
   }
 })
