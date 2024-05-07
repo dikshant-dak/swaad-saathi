@@ -16,13 +16,13 @@ export const requireSignIn = async (req: any, res: any, next: any) => {
       const bearer = token.split(" ");
       const bearerToken = bearer[1];
   
-    //   const blackListedToken = await blacklist.findOne({ token: bearerToken });
-    //   if(blackListedToken){
-    //     return res.status(401).send({
-    //       success: false,
-    //       message: "This session has expired, please sign in",
-    //     })
-    //   }
+      // const blackListedToken = await Blacklist.findOne({ token: bearerToken });
+      // if(blackListedToken !== null && blackListedToken !== undefined){
+      //   return res.status(401).send({
+      //     success: false,
+      //     message: "This session has expired, please sign in",
+      //   })
+      // }
   
       const decode = JWT.verify(token, secret);
       req.customer = decode;

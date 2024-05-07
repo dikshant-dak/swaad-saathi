@@ -4,6 +4,7 @@ import { hashPassword, comparePassword } from "../helpers/authHelper";
 import { validationResult } from "express-validator";
 import { myDataSource } from "../../app-data-source";
 import { Customer } from "../entity/customer.entity";
+// import { Blacklist } from "../entity/blacklist.entity";
 
 dotenv.config();
 
@@ -121,3 +122,37 @@ export const loginController = async (req: any, res: any) => {
     });
   }
 }
+
+// export const logoutController = async (req: any, res: any) => {
+//   try {
+//     const token = req.body.token || req.query.token || req.headers.authorization;
+
+//     if (!token) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "No token provided",
+//       });
+//     }
+
+//     const bearer = token.split(' ');
+//     const bearerToken = bearer[1];
+
+//     const newBlacklist = new Blacklist({
+//       token: bearerToken ,
+//     });
+//     await newBlacklist.save();
+
+//     res.setHeader('Clear-Site-Data', '"cookies", "storage"')
+//     return res.status(200).json({
+//       success: true,
+//       message: "Logout successfully!",
+//     })
+
+//   } catch (error) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "Error in logout",
+//       error,
+//     })
+//   }
+// }
