@@ -1,8 +1,13 @@
-import Link from 'next/link'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { useRouter } from "next/router";
+import axios from 'axios';
+import { useAuthState } from '@/lib/state/auth';
 
 export default function Login() {
+  const router = useRouter();
+  const { authState, setAuthState } = useAuthState();
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -17,29 +22,31 @@ export default function Login() {
     }))
   }
 
-  const handleLogin = async (e: any) => {
-    console.log(JSON.stringify(formData))
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     try {
-      const response = await fetch('http://localhost:4000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      console.log("___________________",response)
-      if (response.ok) {
-        const data = await response.json()
-         console.log('Login successful',formData)
-           const queryParams = new URLSearchParams({
-             id: data.user.id
-           }).toString()
-           router.push(`/?${queryParams}`)
+      const data = {
+        email: formData.email,
+        password: formData.password,
+      };
+      const res = await axios.post('http://localhost:4000/auth/login', data)
+      if (res.data.success) {
+        setAuthState((prevState: any) => {
+          const newState = {
+            ...prevState,
+            loggedIn: true,
+            customerId: res.data.customer?.id,
+            token: res.data.token,
+          };
+          localStorage.setItem('authState', JSON.stringify(newState));
+          return newState;
+        });
+        router.push("/");
       } else {
-        console.error('Login failed')
+        console.log("Error during login:", res.data.message)
       }
     } catch (error) {
-      console.error('Error during login:', error)
+      console.log("Error during login:", error)
     }
   }
 

@@ -1,18 +1,10 @@
+import { useAuthState } from '@/lib/state/auth';
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
-interface Customer {
-  id: string
-  name: string
-  firstName : string
-  lastName : string 
-  // Add other properties as needed
-}
 
-interface Props {
-  customer: Customer 
-}
-const Header: React.FC<Props> = ({ customer }) => {
+const Header = ({ customerData }: { customerData: any }) => {
+  const { authState, setAuthState } = useAuthState();
   const [showSearch, setShowSearch] = useState(false)
   const [underlinedOption, setUnderlinedOption] = useState('home')
   const [restaurants, setRestaurants] = useState<any>([])
@@ -132,26 +124,25 @@ const Header: React.FC<Props> = ({ customer }) => {
             }}
             className="text-red-700 font-bold hover:cursor-pointer"
           />
-
-          {!customer ? (
+          {authState.loggedIn === false ? (
             <>
-              <Link href="/login">
-                <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
-                  Log in
-                </button>
-              </Link>
-              <Link href="/registration">
-                <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
-                  Sign up
-                </button>
-              </Link>
+            <Link href="/login">
+            <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
+              Log in
+            </button>
+          </Link>
+          <Link href="/registration">
+            <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
+              Sign up
+            </button>
+          </Link>
             </>
-          ) : null}
-          {customer ? (
-            <h1 className="text-lg font-bold font-serif">
-              {customer.firstName} {customer.lastName}
-            </h1>
-          ) : null}
+           ) : (
+              <>
+              <h2>Hi, {customerData?.firstName}</h2>
+              </>
+            )}
+          
         </div>
       </div>
       {searchQuery && (

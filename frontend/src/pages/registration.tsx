@@ -1,8 +1,10 @@
-import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import Link from 'next/link'
 
 const RegistrationPage = () => {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -25,29 +27,24 @@ const RegistrationPage = () => {
     e.preventDefault()
 
     try {
-      setLoading(true) 
-
-      const response = await fetch('http://localhost:4000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        console.log('Registration successful')
-        router.push('/')
-        // alert('Registration successful!')
+      const data = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        age: formData.age,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password
+      };
+      const res = await axios.post('http://localhost:4000/auth/register', data)
+      if (res.data.success) {
+        router.push('/login')
       } else {
-        console.error('Registration failed')
-        alert('Something Wrong With Registration!')
+
       }
     } catch (error) {
-      console.error('Error registering:', error)
-    }finally {
-      setLoading(false) 
+        console.log('Error during registration:', error)
     }
+     
   }
   return (
     <>
@@ -136,7 +133,6 @@ const RegistrationPage = () => {
                 <button
                   type="submit"
                   className="bg-blue-500 text-white py-2 px-6 rounded-xl shadow-lg hover:bg-blue-300 focus:bg-blue-100 focus:ring-0 mr-8"
-                  onClick={handleSubmit}
                 >
                   {loading ? 'Loading...' : 'Register'}
                 </button>
