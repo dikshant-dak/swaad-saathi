@@ -1,15 +1,40 @@
-import Favourites from '@/components/Favourites'
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
-import ProductCategory from '@/components/ProductCategory'
-import Toprestaurant from '@/components/Toprestaurant'
-import Image from 'next/image'
-import  headerImage  from '../images/Header.png'
+import Favourites from "@/components/Favourites";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import ProductCategory from "@/components/ProductCategory";
+import Toprestaurant from "@/components/Toprestaurant";
+import Image from "next/image";
+import headerImage from "../images/Header.png";
+import { useAuthState } from "@/lib/state/auth";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const hello = () => {
+const Home = () => {
+  const { authState } = useAuthState();
+  const [customerData, setCustomerData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false);
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then((res) => {
+          setCustomerData(res.data);
+        })
+        .catch((err) => {
+          console.log("Error in displaying customer data", err);
+        });
+    }
+  }, [authState.customerId, authState.loggedIn]);
+
+  if (isLoading) {
+    return <div className="text-white">Loading...</div>;
+  }
+
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       <div className="flex justify-center my-16">
         <Image src={headerImage} height={600} width={1000} alt="test" />
       </div>
@@ -41,14 +66,14 @@ const hello = () => {
             height="450"
             loading="lazy"
             style={{
-              width: '100%'
+              width: "100%",
             }}
           ></iframe>
         </div>
       </div>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default hello
+export default Home;
