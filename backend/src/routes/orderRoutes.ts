@@ -1,12 +1,13 @@
 import express from "express"
 import { myDataSource } from "../../app-data-source"
 import { Order } from "../entity/order.entity"
+import { OrderItem } from "../entity/orderItems.entity"
 
 const router = express.Router()
 
 router.get('/orders', async (req, res) => {
   try {
-    const orders = await myDataSource.getRepository(Order).find()
+    const orders = await myDataSource.getRepository(Order).find({relations: ['orderItems']})
     res.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -46,7 +47,8 @@ router.post('/orders', async (req, res) => {
       ...orderItem,
       orderId: newOrder.id
     }))
-    // res.json(newOrder)
+    await myDataSource.getRepository(OrderItem).save(orderItems)
+    res.json(orderItems)
   } catch (error) {
     console.error('Error adding order:', error)
     res.status(500).json({ error: 'Internal Server Error' })

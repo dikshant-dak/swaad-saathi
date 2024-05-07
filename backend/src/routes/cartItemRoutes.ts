@@ -17,4 +17,15 @@ router.get('/cartItems', async (req, res) => {
   }
 })
 
+router.post('/cartItems', async (req, res) => {
+  try {
+    const newItem = await myDataSource.getRepository(CartItems).save(req.body)
+
+    res.json(newItem)
+  } catch (error) {
+    console.error('Error adding item:', error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
+})
+
 export default router
