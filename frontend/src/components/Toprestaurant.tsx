@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Rating from 'react-rating-stars-component'
 const Toprestaurant = () => {
   const [restaurants, setRestaurants] = useState<any>([])
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -13,8 +14,9 @@ const Toprestaurant = () => {
         console.error('Error fetching data:', error)
       }
     }
+
     fetchData()
-  })
+  }, [])
 
   const highRating = restaurants.filter(
     (restaurant: any) => restaurant.rating > 4.5
@@ -75,7 +77,9 @@ const Toprestaurant = () => {
               <h2 className="text-lg font-semibold">
                 {restaurant.name?.substring(3, restaurant?.name.length)}
               </h2>
-              <h4 className='text-xs py-2 text-gray-500'>{restaurant.description}</h4>
+              <h4 className="text-xs py-2 text-gray-500">
+                {restaurant.description}
+              </h4>
               <Rating
                 count={5}
                 value={restaurant.rating}
