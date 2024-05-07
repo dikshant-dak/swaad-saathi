@@ -8,11 +8,16 @@ import headerImage from '../images/Header.png'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Rating from 'react-rating-stars-component'
+import { useAuthState } from '@/lib/state/auth'
+import axios from 'axios'
 
 const Menu = () => {
   // // State to store menu items
   const [menuItems, setMenuItems] = useState([])
   const [quantities, setQuantities] = useState({});
+  const { authState } = useAuthState();
+  const [customerData, setCustomerData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   // console.log(quantity)
   const handleChangeQuantity = (id:any, change:any) => {
     setQuantities(prev => ({
@@ -92,6 +97,21 @@ const Menu = () => {
   //     console.log('dekat he ')
   //   }
   // }
+
+  useEffect(() => {
+    setIsLoading(false);
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then((res) => {
+          setCustomerData(res.data);
+        })
+        .catch((err) => {
+          console.log("Error in displaying customer data", err);
+        });
+    }
+  }, [authState.customerId, authState.loggedIn]);
+  
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -133,9 +153,13 @@ const Menu = () => {
     }
   }
 
+  if (isLoading) {
+    return <div className="text-white">Loading...</div>;
+  }
+
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       {/* <button onClick={handleApi}>bvbjdb</button> */}
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
         <div className="md:flex h-96 ">
