@@ -1,13 +1,14 @@
-import express from 'express'
-import { myDataSource } from '../../app-data-source'
-import { Order } from '../entity/order.entity'
+import express from "express"
+import { myDataSource } from "../../app-data-source"
+import { Order } from "../entity/order.entity"
+import { OrderItem } from "../entity/orderItems.entity"
 
 const router = express.Router()
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 router.get('/orders', async (req, res) => {
   try {
-    const orders = await myDataSource.getRepository(Order).find()
+    const orders = await myDataSource.getRepository(Order).find({relations: ['orderItems']})
     res.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
@@ -45,7 +46,7 @@ router.get('/orders/:id', async (req, res) => {
   try {
     const order = await myDataSource.getRepository(Order).findOne({
       where: {
-        id: req.params.id
+        customerId: req.params.id
       }
     })
     if (!order) {
@@ -73,7 +74,8 @@ router.post('/orders', async (req, res) => {
       ...orderItem,
       orderId: newOrder.id
     }))
-    // res.json(newOrder)
+    await myDataSource.getRepository(OrderItem).save(orderItems)
+    res.json(orderItems)
   } catch (error) {
     console.error('Error adding order:', error)
     res.status(500).json({ error: 'Internal Server Error' })

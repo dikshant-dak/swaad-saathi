@@ -12,6 +12,15 @@ import Rating from 'react-rating-stars-component'
 const Menu = () => {
   // // State to store menu items
   const [menuItems, setMenuItems] = useState([])
+  const [quantities, setQuantities] = useState({});
+  // console.log(quantity)
+  const handleChangeQuantity = (id:any, change:any) => {
+    setQuantities(prev => ({
+      ...prev,
+      [id]: (prev[id] || 1) + change
+    }));
+  };
+
   const [restaurant, setrestaurant] = useState([])
 
   // // const router = useRouter()
@@ -105,6 +114,25 @@ const Menu = () => {
     }
   }, [id])
 
+  const handleAddToCart = async(id: any) => {
+    console.log(id, quantities[id] || 1)
+    try {
+      const response = await fetch('http://localhost:4000/cartItems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          itemsId:id,
+          quantity: quantities[id] || 1
+        })
+      })
+      const data = await response.json()
+    } catch (error) {
+      console.log('Error adding item:', error)
+    }
+  }
+
   return (
     <>
       <Header />
@@ -145,7 +173,7 @@ const Menu = () => {
                 </div>
                 <div className="p-4">
                   <h2 className="text-lg font-semibold">
-                    {restaurant.name?.substring(3, restaurant?.name.length)}
+                    {restaurant.name}
                   </h2>
                   <h4 className="text-xs py-2 text-gray-500">
                     {restaurant.description}
@@ -159,10 +187,27 @@ const Menu = () => {
                   />
                 </div>
                 <div className="p-4 flex justify-center items-end">
-                  <button className="bg-red-700  text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300">
-                    Add To Cart
-                  </button>
-                </div>
+                <button 
+    onClick={() => handleChangeQuantity(restaurant.id, -1)} 
+    disabled={quantities[restaurant.id] === 1}
+    className="bg-gray-200 text-black px-3 py-1 rounded-l-md hover:bg-gray-300"
+  >
+    -
+  </button>
+  <span className="bg-gray-100 text-black px-3 py-1">{quantities[restaurant.id] || 1}</span>
+  <button 
+    onClick={() => handleChangeQuantity(restaurant.id, 1)}
+    className="bg-gray-200 text-black px-3 py-1 rounded-r-md hover:bg-gray-300"
+  >
+    +
+  </button>
+  <button 
+    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+    onClick={() => handleAddToCart(restaurant.id)}
+  >
+    Add To Cart
+  </button>
+</div>
               </div>
             ))}
           </div>
