@@ -29,6 +29,26 @@ export default function Cart() {
   }, [authState.customerId])
 // console.log()
 
+  const checout = async () => {
+    try {
+      const res = await fetch('http://localhost:4000/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        body: JSON.stringify({
+          orderDate: new Date(),
+          requiredDate: new Date(),
+          status: 'pending',
+          customerNumber: 1
+        })
+      })
+      const data = await res.json()
+      window.location.href = data.url
+    } catch (error) {}
+  }
+
   const handelChange = async () => {
     try {
       const response = await fetch('http://localhost:4000/orders', {
@@ -207,7 +227,7 @@ export default function Cart() {
             </div>
             <button
               className="w-full bg-red-500 text-white py-2 mt-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-              onClick={handelChange}
+              onClick={checout}
             >
               PROCEED TO CHECKOUT
             </button>

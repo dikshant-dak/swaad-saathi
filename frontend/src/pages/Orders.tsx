@@ -41,25 +41,7 @@ const Orders = () => {
     fetchRestroData()
   }, [customerData?.id])
 
-  const checout = async () => {
-    try {
-      const res = await fetch('http://localhost:4000/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'cors',
-        body: JSON.stringify({
-          orderDate: new Date(),
-          requiredDate: new Date(),
-          status: 'pending',
-          customerNumber: 1
-        })
-      })
-      const data = await res.json()
-      window.location.href = data.url
-    } catch (error) {}
-  }
+  
   if (loading) {
     return <div className="text-white">Loading...</div>
   }
