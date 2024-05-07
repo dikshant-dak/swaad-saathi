@@ -38,7 +38,7 @@ export default function Cart() {
           discountAmount:5,
           customerId: '2ce79006-7213-48a9-845a-496126154b46',
           orderItems: cart.map((item) => ({
-            itemId: item.items.id,
+            itemsId: item.items.id,
             quantity: item.quantity
           }))
         })

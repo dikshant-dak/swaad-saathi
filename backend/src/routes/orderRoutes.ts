@@ -34,7 +34,18 @@ router.get('/orders/:id', async (req, res) => {
 router.post('/orders', async (req, res) => {
   try {
     console.log(req.body)
-    // const newOrder = await myDataSource.getRepository(Order).save(req.body)
+    const newOrder = await myDataSource.getRepository(Order).save({
+      orderDate: req.body.orderDate,
+      status: req.body.status,
+      totalPrice: req.body.totalPrice,
+      deliveryAddress: req.body.deliveryAddress,
+      discountAmount: req.body.discountAmount,
+      customerId: req.body.customerId,
+    })
+    const orderItems = req.body.orderItems.map((orderItem:any) => ({
+      ...orderItem,
+      orderId: newOrder.id
+    }))
     // res.json(newOrder)
   } catch (error) {
     console.error('Error adding order:', error)
