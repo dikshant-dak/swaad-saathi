@@ -17,7 +17,7 @@ export default function Cart() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:4000/cartItems:${customerData?.id}`);
+        const response = await fetch(`http://localhost:4000/cartItems/${authState.customerId}`);
         const result = await response.json()
         setCart(result)
       } catch (error) {
@@ -26,7 +26,8 @@ export default function Cart() {
     }
 
     fetchData()
-  }, [customerData?.id])
+  }, [authState.customerId])
+// console.log()
 
   const handelChange = async () => {
     try {
@@ -41,7 +42,7 @@ export default function Cart() {
           totalPrice: totalAmount + 5,
           deliveryAddress: '123, New York',
           discountAmount: 5,
-          customerId: customerData?.id,
+          customerId: authState.customerId,
           orderItems: cart.map(item => ({
             itemsId: item.items.id,
             quantity: item.quantity
