@@ -4,13 +4,13 @@ import { Order } from "../entity/order.entity"
 import { OrderItem } from "../entity/orderItems.entity"
 import dotenv from 'dotenv'
 import { CartItems } from "../entity/cartItems.entity"
+import Stripe from 'stripe'
 
 dotenv.config()
-
-const strpeSecretKey = process.env.STRIPE_SECRET_KEY || ''
+const stripeSecretKey = process.env.SECRET_STRIPE_KEY || ''
+const stripe = new Stripe(stripeSecretKey, { apiVersion: '2024-04-10' })
 
 const router = express.Router()
-const stripe = require('stripe')(strpeSecretKey)
 
 router.get('/orders', async (req, res) => {
   try {
@@ -39,13 +39,14 @@ router.post('/checkout', async (req, res) => {
         }
       ],
       mode: 'payment',
-      success_url: 'https://example.com/success',
-      cancel_url: 'https://example.com/cancel'
+      success_url: 'http://localhost:3000/',
+      cancel_url: 'http://localhost:3000/restaurant'
     })
-    res.json({ id: session.id })
+    res.json({ url: session.url })
     console.log("Session ID: ", session.id)
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' })
+    console.error('Error creating checkout session:', error)
+    res.status(500).json({ error: error })
   }
 })
 
