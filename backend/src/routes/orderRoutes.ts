@@ -14,7 +14,7 @@ const stripe = require('stripe')(strpeSecretKey)
 
 router.get('/orders', async (req, res) => {
   try {
-    const orders = await myDataSource.getRepository(Order).find({relations: ['orderItems']})
+    const orders = await myDataSource.getRepository(Order).find({relations: ['orderItems','customer','orderItems.items']})
     res.json(orders)
   } catch (error) {
     console.error('Error fetching orders:', error)
