@@ -23,7 +23,7 @@ const Header = ({ customerData }: { customerData: any }) => {
       }
     }
     fetchData()
-  })
+  },[])
 
   useEffect(() => {
     if (showSearch) {

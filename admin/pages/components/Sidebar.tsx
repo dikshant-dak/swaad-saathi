@@ -8,6 +8,8 @@ const Sidebar = () => {
     price: '',
     category: 'Salad'
   })
+  const [selectedImage, setSelectedImage] = useState(null);
+
 
   const [loading, setLoading] = useState(false)
   const [city, setCity] = useState([])
@@ -73,7 +75,9 @@ const Sidebar = () => {
     description: '',
     type: '',
     rating: 0,
-    restaurant: ''
+    restaurant: '',
+    img: '', 
+    itemPrice: 0
   })
 
   const handleChange = (e: any) => {
@@ -84,12 +88,26 @@ const Sidebar = () => {
   }
 
   const handleItemChange = (e: any) => {
-    setItemData({
-      ...itemData,
-      [e.target.name]: e.target.value
-    })
-    console.log(itemData)
-  }
+    if (e.target.name === 'img') {
+      // Handle file input
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setItemData({
+          ...itemData,
+          img: reader.result as string
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // Handle other inputs
+      setItemData({
+        ...itemData,
+        [e.target.name]: e.target.value
+      });
+    }
+    console.log(itemData);
+  };
   const handleItemSubmit = async (e: any) => {
     e.preventDefault()
     try {
@@ -103,7 +121,9 @@ const Sidebar = () => {
           description: itemData.description,
           type: itemData.type,
           rating: itemData.rating,
-          restaurantId: itemData.restaurant
+          restaurantId: itemData.restaurant,
+          img: itemData.img,
+          price: itemData.itemPrice as number
         })
       })
       const data = await response.json()
@@ -306,6 +326,23 @@ const Sidebar = () => {
               </select>
             </div>
             <div className="flex gap-5 mt-5">
+  <label
+    // htmlFor="itemImage"
+    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+  >
+    Item Image
+  </label>
+  <input
+    onChange={handleItemChange}
+    // value={itemData.img}
+    id="img"
+    name="img"
+    type="file"
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    required
+  />
+</div>
+            <div className="flex gap-5 mt-5">
               <label
                 htmlFor="item"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
@@ -322,6 +359,24 @@ const Sidebar = () => {
                 required
               />
             </div>
+            <div className="flex gap-5 mt-5">
+  <label
+    htmlFor="itemPrice"
+    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+  >
+    Item Price
+  </label>
+  <input
+    onChange={handleItemChange}
+    value={itemData.itemPrice}
+    id="ItemPrice"
+    name="itemPrice"
+    type="number"
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    placeholder="Enter Item Price"
+    required
+  />
+</div>
             <div className="flex gap-5 mt-5">
               <label
                 htmlFor="description"
