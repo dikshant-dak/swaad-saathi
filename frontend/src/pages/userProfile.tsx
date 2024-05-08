@@ -41,7 +41,8 @@ if (customerData) {
   console.log('customerData is null')
 }
 
-if(authState.customerId === null) {
+
+if(authState.loggedIn === false) {
   return (
     <>
       <Header customerData={customerData} />

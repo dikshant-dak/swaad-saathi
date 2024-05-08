@@ -145,7 +145,8 @@ export default function Cart() {
   if (loading) {
     return <div className="text-white">Loading...</div>
   }
-  if(authState.customerId === null) {
+
+  if(authState.loggedIn === false) {
     return (
       <>
         <Header customerData={customerData} />
