@@ -173,7 +173,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+               Vegetable Gratin is a classic French dish
               </div>
               <div
                 className="price"
@@ -186,7 +186,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $12
                 <span
                   style={{
                     fontSize: '14px',
@@ -195,7 +195,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $24
                 </span>
                 <div
                   className="percent"
@@ -344,7 +344,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+                Roasted Broccoli is a classic French dish
               </div>
               <div
                 className="price"
@@ -357,7 +357,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $25
                 <span
                   style={{
                     fontSize: '14px',
@@ -366,7 +366,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $100
                 </span>
                 <div
                   className="percent"
@@ -377,7 +377,7 @@ const Favourites = () => {
                   }}
                 >
                   {' '}
-                  ($50% Off){' '}
+                  ($75% Off){' '}
                 </div>
               </div>
             </div>
@@ -515,7 +515,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+                Grilled Vegetable with sauce
               </div>
               <div
                 className="price"
@@ -528,7 +528,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $5
                 <span
                   style={{
                     fontSize: '14px',
@@ -537,7 +537,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $20
                 </span>
                 <div
                   className="percent"
@@ -548,7 +548,7 @@ const Favourites = () => {
                   }}
                 >
                   {' '}
-                  ($50% Off){' '}
+                  ($25% Off){' '}
                 </div>
               </div>
             </div>
@@ -686,7 +686,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+                Burger with multigrain buns
               </div>
               <div
                 className="price"
@@ -699,7 +699,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $8
                 <span
                   style={{
                     fontSize: '14px',
@@ -708,7 +708,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $24
                 </span>
                 <div
                   className="percent"
@@ -719,7 +719,7 @@ const Favourites = () => {
                   }}
                 >
                   {' '}
-                  ($50% Off){' '}
+                  ($66% Off){' '}
                 </div>
               </div>
             </div>
@@ -857,7 +857,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+                Tofu with chilli sauce and chilli
               </div>
               <div
                 className="price"
@@ -870,7 +870,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $5
                 <span
                   style={{
                     fontSize: '14px',
@@ -879,7 +879,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $10
                 </span>
                 <div
                   className="percent"
@@ -1028,7 +1028,7 @@ const Favourites = () => {
                   whiteSpace: 'normal'
                 }}
               >
-                aloo ki sabji with poori
+                Margreata Pizza with tomato topping
               </div>
               <div
                 className="price"
@@ -1041,7 +1041,7 @@ const Favourites = () => {
                   color: 'black'
                 }}
               >
-                $500
+                $75
                 <span
                   style={{
                     fontSize: '14px',
@@ -1050,7 +1050,7 @@ const Favourites = () => {
                     textDecoration: 'line-through'
                   }}
                 >
-                  $1000
+                  $150
                 </span>
                 <div
                   className="percent"
