@@ -143,6 +143,9 @@ console.log(orderData)
         })
       })
       const data = await response.json()
+      if(data){
+        window.alert("Item Added Successfully")
+      }
     } catch (error) {
       console.log('Error adding item:', error)
     }
@@ -167,6 +170,9 @@ console.log(orderData)
       })
 
       const data = await response.json()
+      if(data){
+        window.alert("Restaurant Added Successfully")
+      }
     } catch (error) {
       console.error('Error adding restaurant:', error)
     }

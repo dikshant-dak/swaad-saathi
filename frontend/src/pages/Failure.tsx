@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { CgDanger } from 'react-icons/cg'
 const Failure = () => {
   return (
@@ -9,17 +10,17 @@ const Failure = () => {
             <h3>Payment Failed!</h3>
           </div>
           <p className="text-gray-600 my-2">
-            We're sorry, it seems there was an issue processing your payment.
+            We are sorry, it seems there was an issue processing your payment.
           </p>
           <p>Feel free to try again later or contact support for assistance.</p>
 
           <div className="py-10 text-center">
-            <a
+            <Link
               href="/"
               className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-md"
             >
               GO BACK
-            </a>
+            </Link>
           </div>
         </div>
       </div>

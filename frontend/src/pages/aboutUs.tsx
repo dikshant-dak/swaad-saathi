@@ -42,7 +42,7 @@ const AboutUs = () => {
           </p>
           <p className="text-gray-700 mb-4">
             Our team is dedicated to providing you with the best dining
-            experience, whether you're craving a hearty breakfast, a quick
+            experience, whether you are craving a hearty breakfast, a quick
             lunch, or a gourmet dinner.
           </p>
           <p className="text-gray-700 mb-4">

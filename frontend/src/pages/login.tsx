@@ -126,7 +126,7 @@ export default function Login() {
 
               <div className="w-full mt-10 mb-6 ml-6">
                 <label className="block font-medium text-sm text-sky-950 w-full">
-                  Don't Have Any Account?
+                  Do not Have Any Account?
                   <Link href="/registration">
                     <span className="text-cyan-500"> Create Account </span>
                   </Link>
