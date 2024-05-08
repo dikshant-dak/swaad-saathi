@@ -16,7 +16,6 @@ export default function Cart() {
   // const history = useHistory();
   const [totalAmount, setTotalAmount] = useState(0)
 
-  console.log(cart)
 
   useEffect(() => {
     async function fetchData() {
@@ -164,7 +163,7 @@ export default function Cart() {
       <Header customerData={customerData} />
       <div className="container mx-auto px-6 py-8 flex">
         <div className="w-2/3 pr-8">
-          <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
+          <h1 className="text-4xl font-bold mb-8 text-gray-600">Your Cart</h1>
           {cart.length > 0 ? (
             cart.map((item: any) => (
               <motion.div
@@ -224,7 +223,9 @@ export default function Cart() {
         </div>
         <div className="w-1/3 pl-8">
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-bold mb-4">Payment Summary</h2>
+            <h2 className="text-2xl font-bold mb-4 text-red-700">
+              Payment Summary
+            </h2>
             <hr className="my-4" />
             <div className="text-gray-600 mb-2">
               <div className="flex justify-between mb-2">

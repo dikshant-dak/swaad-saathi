@@ -60,11 +60,11 @@ console.log("----")
           </p>
           <Favourites />
         </div>
-        <div className="mt-10  py-5 bg-gray-200">
+        <div className="mt-10 px-5  py-5 bg-gray-200">
           <span className="font-bold text-2xl text-red-700">
             Top places near you
           </span>
-          <div className="my-5">
+          <div className="my-5 mx-5">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3628.369332295504!2d73.68093597392397!3d24.576446956566198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e5640659a7d5%3A0x9257af76faeaab0e!2sCity%20Palace!5e0!3m2!1sen!2sin!4v1713488769448!5m2!1sen!2sin"
               height="450"

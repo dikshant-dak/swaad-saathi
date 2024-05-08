@@ -84,11 +84,11 @@ const Orders = () => {
                     }}
                   />
                   <div className="flex flex-col p-10 gap-3">
-                    <h1 className="text-red-700 tracking-wider text-xl">
+                    <h1 className="text-red-700 tracking-wider text-xl font-semibold">
                       {item.items.name}
                     </h1>
                     <h2 className="text-red-800 text-lg">
-                      price: {item.items.price}
+                      Price: {item.items.price}
                     </h2>
                     <h2 className="text-gray-700">Quantity: {item.quantity}</h2>
                   </div>

@@ -14,7 +14,7 @@ const Toprestaurant = () => {
         console.error('Error fetching data:', error)
       }
     }
-
+    
     fetchData()
   }, [])
 
@@ -87,11 +87,6 @@ const Toprestaurant = () => {
                 activeColor="#ffd700"
                 edit={false}
               />
-            </div>
-            <div className="p-4 flex justify-center items-end">
-              <button className="bg-red-700  text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300">
-                View Menu
-              </button>
             </div>
           </div>
         ))}
