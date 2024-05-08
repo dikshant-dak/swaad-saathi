@@ -141,7 +141,7 @@ const Header = ({ customerData }: { customerData: any }) => {
               <div className="w-1/2 mx-2">
                 <input
                   ref={inputSearch}
-                  className="bg-white border border-gray-200 rounded-md px-3 w-[100%] py-2 focus:outline-red-700  "
+                  className="bg-white border border-gray-200 rounded-md px-3 w-96 py-2 focus:outline-red-700"
                   placeholder="Search for dishes or restaurants..."
                   type="search"
                   onChange={e => {
