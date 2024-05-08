@@ -186,7 +186,7 @@ const Menu = () => {
         >
           +
         </button>
-        {!showGoToCart[restaurant.id] && authState.customerId && (
+        {!showGoToCart[restaurant.id] && (authState.loggedIn === true) && (
           <button
             className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
             onClick={() => handleAddToCart(restaurant.id)}
