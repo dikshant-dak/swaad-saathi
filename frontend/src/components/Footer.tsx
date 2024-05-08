@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {
   FaFacebook,
   FaInstagram,
@@ -18,9 +19,13 @@ const Footer = () => {
           re dedicated to giving you the very best of food, with a focus on
           quality, taste and hygiene.
         </p>
-        <div className='flex items-center justify-center py-4 gap-10 text-white font-semibold'>
-          <span className=' transition-all duration-300'>Contact Us</span>
-          <span>About Us</span>
+        <div className="flex items-center justify-center py-4 gap-10 text-white font-semibold">
+          <Link href="/contactUs">
+            <span className=" transition-all duration-300">Contact Us</span>
+          </Link>
+          <Link href="/aboutUs">
+            <span>About Us</span>
+          </Link>
           <span>Blogs</span>
           <span>Security</span>
         </div>

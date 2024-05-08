@@ -23,7 +23,7 @@ const Toprestaurant = () => {
   )
   // console.log(highRating.slice(0, 12))
   return (
-    <div className="bg-red-700 mr-10 rounded-r-3xl">
+    <div className="bg-red-700    rounded-l-3xl">
       <div className="flex justify-start ml-16 text-white mt-3 font-semibold">
         <span className="text-xl mt-4">Top Rated Restaurant</span>
       </div>

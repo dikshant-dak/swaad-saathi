@@ -8,7 +8,7 @@ const ProductCard = () => {
     <div
       className="card"
       style={{
-        width: '300px',
+        // width: '300px',
         display: 'flex',
         flexDirection: 'column',
         gap: '16px',
@@ -33,13 +33,13 @@ const ProductCard = () => {
         <Image
          
           src='../images/Pizza.jpg'
-          width="400"
-          height="200"
+          width="200"
+          height="100"
           alt="name"
           className="image"
           style={{
             width: '100%',
-            height: '300px',
+            height: '200px',
             borderRadius: '6px',
             objectFit: 'cover',
             transition: 'all 0.3s ease-out'
