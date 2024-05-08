@@ -139,76 +139,73 @@ const Menu = () => {
       </div>
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
         <div className="  rounded-3xl">
-          <div className=" flex overflow-x-auto gap-4 p-4">
-            {menuItems.map((restaurant: any) => (
-              <div
-                key={restaurant.id}
-                className="bg-white rounded-lg min-w-64 shadow-xl"
-              >
-                <div className="p-4">
-                  <Image
-                    alt="Menu Image 1"
-                    className="rounded-t-lg object-cover"
-                    height={200}
-                    src={restaurant.img}
-                    // src="https://t4.ftcdn.net/jpg/02/03/06/45/360_F_203064510_mkerPoGGefI6JwajMaMoshbMwU6PFbhr.jpg"
-                    style={{
-                      aspectRatio: '300/200',
-                      objectFit: 'cover'
-                    }}
-                    width={400}
-                  />
-                </div>
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold">{restaurant.name}</h2>
-                  <h4 className="text-xs py-2 text-gray-500">
-                    {restaurant.description}
-                  </h4>
-                  <Rating
-                    count={5}
-                    value={restaurant.rating}
-                    size={16}
-                    activeColor="#ffd700"
-                    edit={false}
-                  />
-                </div>
-                <div className="p-4 flex justify-center items-end">
-                  <button
-                    onClick={() => handleChangeQuantity(restaurant.id, -1)}
-                    disabled={quantities[restaurant.id] === 1}
-                    className="bg-gray-200 text-black px-3 py-1 rounded-l-md hover:bg-gray-300"
-                  >
-                    -
-                  </button>
-                  <span className="bg-gray-100 text-black px-3 py-1">
-                    {quantities[restaurant.id] || 1}
-                  </span>
-                  <button
-                    onClick={() => handleChangeQuantity(restaurant.id, 1)}
-                    className="bg-gray-200 text-black px-3 py-1 rounded-r-md hover:bg-gray-300"
-                  >
-                    +
-                  </button>
-                  {!showGoToCart[restaurant.id] && (authState.loggedIn === true) && (
-  <button
-    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
-    onClick={() => handleAddToCart(restaurant.id)}
-  >
-    Add To Cart
-  </button>
-)}
-                  {showGoToCart[restaurant.id] && (
-                    <button
-                      className="bg-blue-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
-                      onClick={() => router.push('/cart')}
-                    >
-                      Go To Cart
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-4 gap-4">
+  {menuItems.map((restaurant: any) => (
+    <div
+      key={restaurant.id}
+      className="bg-white rounded-lg shadow-xl p-4"
+    >
+      <Image
+        alt="Menu Image 1"
+        className="rounded-t-lg object-cover w-full"
+        height={200}
+        width={300}
+        src={restaurant.img}
+        style={{
+          aspectRatio: '300/200',
+          objectFit: 'cover'
+        }}
+      />
+      <div className="p-4">
+        <h2 className="text-lg font-semibold">{restaurant.name}</h2>
+        <h4 className="text-xs py-2 text-gray-500">
+          {restaurant.description}
+        </h4>
+        <Rating
+          count={5}
+          value={restaurant.rating}
+          size={16}
+          activeColor="#ffd700"
+          edit={false}
+        />
+      </div>
+      <div className="p-4 flex justify-center items-end">
+        <button
+          onClick={() => handleChangeQuantity(restaurant.id, -1)}
+          disabled={quantities[restaurant.id] === 1}
+          className="bg-gray-200 text-black px-3 py-1 rounded-l-md hover:bg-gray-300"
+        >
+          -
+        </button>
+        <span className="bg-gray-100 text-black px-3 py-1">
+          {quantities[restaurant.id] || 1}
+        </span>
+        <button
+          onClick={() => handleChangeQuantity(restaurant.id, 1)}
+          className="bg-gray-200 text-black px-3 py-1 rounded-r-md hover:bg-gray-300"
+        >
+          +
+        </button>
+        {!showGoToCart[restaurant.id] && (authState.loggedIn === true) && (
+          <button
+            className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+            onClick={() => handleAddToCart(restaurant.id)}
+          >
+            Add To Cart
+          </button>
+        )}
+        {showGoToCart[restaurant.id] && (
+          <button
+            className="bg-blue-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+            onClick={() => router.push('/cart')}
+          >
+            Go To Cart
+          </button>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
         </div>
       </div>
       <Footer />
