@@ -8,10 +8,30 @@ import headerImage from '../images/Header.png'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Rating from 'react-rating-stars-component'
-
+import { useAuthState } from '@/lib/state/auth'
+import axios from 'axios'
+interface MenuItem {
+  description: string
+  id: string
+  img: string
+  name: string
+  price: number
+  rating: number
+  restaurant: {
+    cityId: string
+    description: string
+    id: string
+    img: string
+    name: string
+    rating: number
+    type: string
+    restaurantId: string
+  }
+  type: string
+}
 const Menu = () => {
   // // State to store menu items
-  const [menuItems, setMenuItems] = useState([])
+const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [quantities, setQuantities] = useState({});
   // console.log(quantity)
   const handleChangeQuantity = (id:any, change:any) => {
@@ -132,25 +152,39 @@ const Menu = () => {
       console.log('Error adding item:', error)
     }
   }
+  const { authState } = useAuthState()
+  const [customerData, setCustomerData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  console.log('----')
+  useEffect(() => {
+    setIsLoading(false)
+    if (authState.loggedIn === true) {
+      axios
+        .get(`http://localhost:4000/customers/${authState.customerId}`)
+        .then(res => {
+          setCustomerData(res.data)
+        })
+        .catch(err => {
+          console.log('Error in displaying customer data', err)
+        })
+    }
+  }, [authState.customerId, authState.loggedIn])
 
   return (
     <>
-      <Header />
+      <Header customerData={customerData} />
       {/* <button onClick={handleApi}>bvbjdb</button> */}
+      <div className="flex items-center mx-44 gap-3 mb-5 mt-6 ">
+        <h1 className="text-[25px] font-semibold text-gray-600 tracking-widest">
+          {menuItems[0]?.restaurant?.name}
+        </h1>
+        <h3 className="mt-2 flex gap-2">
+          <p className="font-bold text-red-700">{}</p>
+          <span className="text-gray-600"> Food Menu....</span>
+        </h3>
+      </div>
       <div className="max-w-screen mx-20 my-5 h-full rounded-xl  overflow-hidden">
-        <div className="md:flex h-96 ">
-          <div className="md:flex-shrink-0 w-full">
-            {menuItems.length > 0 && (
-              <img
-                className="h-full w-full object-cover mx-8 rounded-3xl"
-                src={menuItems[0].restaurant.img}
-                alt="Restaurant Image"
-              />
-            )}
-          </div>
-        </div>
         <div className="  rounded-3xl">
-          
           <div className=" flex overflow-x-auto gap-4 p-4">
             {menuItems.map((restaurant: any) => (
               <div
@@ -172,9 +206,7 @@ const Menu = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <h2 className="text-lg font-semibold">
-                    {restaurant.name}
-                  </h2>
+                  <h2 className="text-lg font-semibold">{restaurant.name}</h2>
                   <h4 className="text-xs py-2 text-gray-500">
                     {restaurant.description}
                   </h4>
@@ -187,27 +219,29 @@ const Menu = () => {
                   />
                 </div>
                 <div className="p-4 flex justify-center items-end">
-                <button 
-    onClick={() => handleChangeQuantity(restaurant.id, -1)} 
-    disabled={quantities[restaurant.id] === 1}
-    className="bg-gray-200 text-black px-3 py-1 rounded-l-md hover:bg-gray-300"
-  >
-    -
-  </button>
-  <span className="bg-gray-100 text-black px-3 py-1">{quantities[restaurant.id] || 1}</span>
-  <button 
-    onClick={() => handleChangeQuantity(restaurant.id, 1)}
-    className="bg-gray-200 text-black px-3 py-1 rounded-r-md hover:bg-gray-300"
-  >
-    +
-  </button>
-  <button 
-    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
-    onClick={() => handleAddToCart(restaurant.id)}
-  >
-    Add To Cart
-  </button>
-</div>
+                  <button
+                    onClick={() => handleChangeQuantity(restaurant.id, -1)}
+                    disabled={quantities[restaurant.id] === 1}
+                    className="bg-gray-200 text-black px-3 py-1 rounded-l-md hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span className="bg-gray-100 text-black px-3 py-1">
+                    {quantities[restaurant.id] || 1}
+                  </span>
+                  <button
+                    onClick={() => handleChangeQuantity(restaurant.id, 1)}
+                    className="bg-gray-200 text-black px-3 py-1 rounded-r-md hover:bg-gray-300"
+                  >
+                    +
+                  </button>
+                  <button
+                    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+                    onClick={() => handleAddToCart(restaurant.id)}
+                  >
+                    Add To Cart
+                  </button>
+                </div>
               </div>
             ))}
           </div>

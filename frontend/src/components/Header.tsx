@@ -47,7 +47,7 @@ const Header = ({ customerData }: { customerData: any }) => {
         <span className="mr-4 md:mr-6 font-bold text-[24px] text-red-700 tracking-widest ">
           Swaad Saathi
         </span>
-        <div className="flex items-center font-bold text-lg text-red-700 gap-10">
+        <div className="hidden md:flex items-center font-bold text-lg text-red-700 gap-10">
           <Link
             href="/"
             id="home"
@@ -73,7 +73,7 @@ const Header = ({ customerData }: { customerData: any }) => {
             Orders
           </Link>
           <Link
-            href="/"
+            href="/userProfile"
             id="account"
             className={`tracking-wider ${
               underlinedOption === 'account' ? 'underline' : null
@@ -100,7 +100,7 @@ const Header = ({ customerData }: { customerData: any }) => {
         <div className="flex items-center gap-4 ">
           {showSearch && (
             <div className="">
-              <div className="w-64 mx-2">
+              <div className="w-1/2 mx-2">
                 <input
                   ref={inputSearch}
                   className="bg-white border border-gray-200 rounded-md px-3 w-[100%] py-2 focus:outline-red-700  "
@@ -123,23 +123,22 @@ const Header = ({ customerData }: { customerData: any }) => {
           />
           {authState.loggedIn === false ? (
             <>
-            <Link href="/login">
-            <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
-              Log in
-            </button>
-          </Link>
-          <Link href="/registration">
-            <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
-              Sign up
-            </button>
-          </Link>
+              <Link href="/login">
+                <button className="bg-red-700 text-white hover:text-red-700 hover:bg-transparent px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300">
+                  Log in
+                </button>
+              </Link>
+              <Link href="/registration">
+                <button className="bg-red-700 text-white hover:bg-red-500 px-4 py-2 rounded-xl duration-300 transition-all font-semibold shadow-lg shadow-red-300 hover:bg-transparent hover:text-red-700">
+                  Sign up
+                </button>
+              </Link>
             </>
-           ) : (
-              <>
+          ) : (
+            <>
               <h2>Hi, {customerData?.firstName}</h2>
-              </>
-            )}
-          
+            </>
+          )}
         </div>
       </div>
       {searchQuery && (

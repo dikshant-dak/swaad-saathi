@@ -47,31 +47,23 @@ const RegistrationPage = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div
-          className="relative min-h-screen flex flex-col sm:justify-center items-center bgImageAuth"
-          // style={{
-          //   backgroundImage: `url(${bgImage})`,
-          //   backgroundSize: 'cover',
-          //   backgroundPosition: 'center',
-          //   backgroundRepeat: 'no-repeat'
-          // }}
-        >
-          <div className="card bg-orange-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform -rotate-3"></div>
-          <div className="card bg-orange-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform -rotate-3"></div>
+        <div className="relative min-h-screen  flex flex-col sm:justify-center items-center bgImageAuth">
+          <div className="card bg-orange-600 shadow-lg w-2/4 h-96 rounded-3xl absolute transform -rotate-3"></div>
+          <div className="card bg-orange-600 shadow-lg w-2/4 h-96 rounded-3xl absolute transform -rotate-3"></div>
 
-          <div className="card bg-red-600 shadow-lg  w-2/4 h-96 rounded-3xl absolute  transform   rotate-3"></div>
-          <div className=" relative bg-gray-100  rounded-2xl w-2/4 h-96">
+          <div className="card bg-red-600 shadow-lg w-2/4 h-96 rounded-3xl absolute transform rotate-3"></div>
+          <div className="relative bg-gray-100 rounded-2xl w-96 md:w-2/4 h-full">
             <label className="block mt-3 text-xl text-gray-700 text-center mb-6 font-semibold">
               Registration
             </label>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row">
               <input
                 type="text"
                 placeholder="Enter First Name"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className=" m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
               <input
                 type="text"
@@ -79,47 +71,47 @@ const RegistrationPage = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className=" m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
             </div>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row">
               <input
                 type="text"
                 placeholder="Enter Email Address"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
               <input
-                type="text"
+                type="password"
                 placeholder="Enter Password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
             </div>
-            <div className="flex">
+            <div className="flex flex-col md:flex-row">
               <input
                 type="text"
                 placeholder="Enter Phone Number"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className=" m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
               <input
                 type="number"
-                placeholder="Enter age"
+                placeholder="Enter Age"
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
-                className="m-4 pl-2 block w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
+                className="m-4 pl-2 block w-full md:w-1/2 border-none bg-white h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
               />
             </div>
-            <div className="flex items-center">
-              <div className="w-1/2  ml-6">
+            <div className="flex items-center flex-col md:flex-row">
+              <div className="md:w-1/2 ml-6 mb-4 md:mb-0">
                 <label className="block font-medium text-sm text-sky-950 w-full">
                   Already Have An Account ?
                   <Link href="/login">
@@ -127,10 +119,10 @@ const RegistrationPage = () => {
                   </Link>
                 </label>
               </div>
-              <div className="w-96 m-4 pl-2 flex justify-end">
+              <div className="w-full md:w-auto m-4 pl-2 flex justify-center md:justify-end">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white py-2 px-6 rounded-xl shadow-lg hover:bg-blue-300 focus:bg-blue-100 focus:ring-0 mr-8"
+                  className="bg-blue-500 text-white py-2 px-6 rounded-xl shadow-lg hover:bg-blue-300 focus:bg-blue-100 focus:ring-0"
                 >
                   Register
                 </button>
