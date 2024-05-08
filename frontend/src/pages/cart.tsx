@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import { useAuthState } from '@/lib/state/auth'
 import axios from 'axios'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function Cart() {
   const [cart, setCart] = useState<any>([])
@@ -146,6 +147,17 @@ export default function Cart() {
   if (loading) {
     return <div className="text-white">Loading...</div>
   }
+  if(authState.customerId === null) {
+    return (
+      <>
+        <Header customerData={customerData} />
+        <div className="text-center mt-20">
+          <h1 className="text-3xl text-red-700">Please Login to view your orders</h1>
+        </div>
+        <Footer />
+      </>
+    )
+  }
 
   return (
     <>
@@ -162,10 +174,12 @@ export default function Cart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <img
+                <Image
                   src={item.items.img}
                   alt={item.items.name}
                   className="w-64 h-32 rounded-lg object-cover mr-8"
+                  width={256}
+                  height={256}
                 />
                 <div className="flex flex-col justify-between flex-1">
                   <div>
