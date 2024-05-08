@@ -1,11 +1,12 @@
-import { useAuthState } from '@/lib/state/auth';
+import { useAuthState } from '@/lib/state/auth'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { FiShoppingCart } from 'react-icons/fi'
 import { IoIosSearch } from 'react-icons/io'
+import { MdOutlineLogout } from 'react-icons/md'
 
 const Header = ({ customerData }: { customerData: any }) => {
-  const { authState, setAuthState } = useAuthState();
+  const { authState, setAuthState } = useAuthState()
   const [showSearch, setShowSearch] = useState(false)
   const [underlinedOption, setUnderlinedOption] = useState('')
   const [restaurants, setRestaurants] = useState<any>([])
@@ -23,7 +24,7 @@ const Header = ({ customerData }: { customerData: any }) => {
       }
     }
     fetchData()
-  },[])
+  }, [])
 
   useEffect(() => {
     if (showSearch) {
@@ -34,7 +35,44 @@ const Header = ({ customerData }: { customerData: any }) => {
   const filteredRestaurants = restaurants.filter((restaurant: any) =>
     restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
-  console.log(underlinedOption)
+
+  // const handleLogout = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.post("http://localhost:4000/auth/logout", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       withCredentials: true,
+  //     });
+  //     window.location.href = "/";
+  //     setAuthState((prevState: any) => {
+  //       const newState = {
+  //         ...prevState,
+  //         loggedIn: false,
+  //         customerId: null,
+  //       };
+  //       localStorage.setItem("authState", JSON.stringify(newState));
+  //       return newState;
+  //     });
+  //   } catch (error) {
+  //     console.log("Error in logout", error);
+  //     // toast.error("Error in logout");
+  //   }
+  // };
+  const handleLogout = async () => {
+    window.location.href = '/'
+    setAuthState((prevState: any) => {
+      const newState = {
+        ...prevState,
+        loggedIn: false,
+        customerId: null
+      }
+      localStorage.setItem('authState', JSON.stringify(newState))
+      return newState
+    })
+  }
+
   return (
     <div
       style={{
@@ -119,7 +157,7 @@ const Header = ({ customerData }: { customerData: any }) => {
             onClick={() => {
               setShowSearch(!showSearch)
             }}
-            className="text-red-700 font-bold hover:cursor-pointer"
+            className="text-red-700 font-bold hover:cursor-pointer mr-5"
           />
           {authState.loggedIn === false ? (
             <>
@@ -137,6 +175,9 @@ const Header = ({ customerData }: { customerData: any }) => {
           ) : (
             <>
               <h2>Hi, {customerData?.firstName}</h2>
+              <button onClick={handleLogout}>
+                <MdOutlineLogout size={25} />
+              </button>
             </>
           )}
         </div>
@@ -161,7 +202,7 @@ const Header = ({ customerData }: { customerData: any }) => {
                   border: '1px solid #c3c3c3'
                 }}
               >
-                <img
+                <Image
                   src={restaurant.img}
                   alt={restaurant.name}
                   className="w-20 h-20 rounded-lg"

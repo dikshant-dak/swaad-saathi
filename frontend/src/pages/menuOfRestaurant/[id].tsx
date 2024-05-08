@@ -1,15 +1,11 @@
-import Favourites from '@/components/Favourites'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
-import ProductCategory from '@/components/ProductCategory'
-import Toprestaurant from '@/components/Toprestaurant'
-import Image from 'next/image'
-import headerImage from '../images/Header.png'
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import Rating from 'react-rating-stars-component'
 import { useAuthState } from '@/lib/state/auth'
 import axios from 'axios'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import Rating from 'react-rating-stars-component'
 interface MenuItem {
   description: string
   id: string
@@ -31,87 +27,23 @@ interface MenuItem {
 }
 const Menu = () => {
   // // State to store menu items
-const [menuItems, setMenuItems] = useState<MenuItem[]>([])
-  const [quantities, setQuantities] = useState({});
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const [quantities, setQuantities] = useState<any>({})
   // console.log(quantity)
-  const handleChangeQuantity = (id:any, change:any) => {
-    setQuantities(prev => ({
+  const handleChangeQuantity = (id: any, change: any) => {
+    setQuantities((prev: any) => ({
       ...prev,
       [id]: (prev[id] || 1) + change
-    }));
-  };
+    }))
+  }
+  const [showGoToCart, setShowGoToCart] = useState<any>({})
 
   const [restaurant, setrestaurant] = useState([])
 
   // // const router = useRouter()
   const router = useRouter()
   const { id } = router.query
-  // const [restaurant, setRestaurant] = useState(null)
-  // const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   if (id) {
-  //     fetch(`/menuOfRestaurant/${id}`)
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch menu items')
-  //         }
-  //         return response.json()
-  //       })
-  //       .then(data => {
-  //         console.log('data-----aa------gaya', data) // Set the fetched menu items in state
-  //       })
-  //       .catch(error => {
-  //         console.error('Error fetching menu items:', error)
-  //         // Handle error
-  //       })
-  //   }
-  // }, [id])
-  // useEffect(() => {
-  //   // Extract the restaurantId from the URL query
-  //   const { restaurantId } = router.query
-
-  //   if (restaurantId) {
-  //     // Fetch menu items for the specified restaurant ID
-  //     fetch(`/menuOfRestaurant/${restaurantId}`)
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch menu items')
-  //         }
-  //         return response.json()
-  //       })
-  //       .then(data => {
-  //         setMenuItems(data) // Set the fetched menu items in state
-  //       })
-  //       .catch(error => {
-  //         console.error('Error fetching menu items:', error)
-  //         // Handle error
-  //       })
-  //     console.log('--------menu-------', menuItems)
-  //   }
-  // }, [router.query])
-  // const handleApi = async () => {
-  //   console.log('-------------ab dekh te he ', id)
-  //   try {
-  //     fetch(`http://localhost:4000/menuOfRestaurant/${id}`)
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error('Failed to fetch menu items')
-  //         }
-  //         return response.json()
-  //       })
-  //       .then(data => {
-  //         setMenuItems(data) // Set the fetched menu items in state
-  //       })
-  //       .catch(error => {
-  //         console.error('Error fetching menu items:', error)
-  //         // Handle error
-  //       })
-  //     console.log('ho gaya', menuItems)
-  //   } catch {
-  //     console.log('dekat he ')
-  //   }
-  // }
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
@@ -134,7 +66,7 @@ const [menuItems, setMenuItems] = useState<MenuItem[]>([])
     }
   }, [id])
 
-  const handleAddToCart = async(id: any) => {
+  const handleAddToCart = async (id: any) => {
     console.log(id, quantities[id] || 1)
     try {
       const response = await fetch('http://localhost:4000/cartItems', {
@@ -143,10 +75,12 @@ const [menuItems, setMenuItems] = useState<MenuItem[]>([])
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          itemsId:id,
-          quantity: quantities[id] || 1
+          itemsId: id,
+          quantity: quantities[id] || 1,
+          customerId: authState.customerId
         })
       })
+      setShowGoToCart((prevState: any) => ({ ...prevState, [id]: true }))
       const data = await response.json()
     } catch (error) {
       console.log('Error adding item:', error)
@@ -170,6 +104,30 @@ const [menuItems, setMenuItems] = useState<MenuItem[]>([])
     }
   }, [authState.customerId, authState.loggedIn])
 
+  if (isLoading) {
+    return <div className="text-white">Loading...</div>
+  }
+  if (menuItems.length === 0) {
+    return (
+      <>
+        <Header customerData={customerData} />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            fontSize: '1.5em',
+            color: '#333',
+            backgroundColor: '#f2f2f2'
+          }}
+        >
+          No Data Found
+        </div>
+        <Footer />
+      </>
+    )
+  }
   return (
     <>
       <Header customerData={customerData} />
@@ -235,18 +193,29 @@ const [menuItems, setMenuItems] = useState<MenuItem[]>([])
                   >
                     +
                   </button>
-                  <button
-                    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
-                    onClick={() => handleAddToCart(restaurant.id)}
-                  >
-                    Add To Cart
-                  </button>
+                  {!showGoToCart[restaurant.id] && (
+                    <button
+                      className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+                      onClick={() => handleAddToCart(restaurant.id)}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
+                  {showGoToCart[restaurant.id] && (
+                    <button
+                      className="bg-blue-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+                      onClick={() => router.push('/cart')}
+                    >
+                      Go To Cart
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

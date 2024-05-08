@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 const Sidebar = () => {
   const [selected, setSelected] = useState('add')
+  const [orderData, setOrderData] = useState<any>([])
   const [data, setData] = useState({
     name: '',
     description: '',
@@ -22,6 +24,20 @@ const Sidebar = () => {
         const response = await fetch('http://localhost:4000/allrestaurants')
         const result = await response.json()
         setRestaurants(result)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+console.log(orderData)
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:4000/orders')
+        const result = await response.json()
+        setOrderData(result)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -449,7 +465,34 @@ const Sidebar = () => {
             </div>
           </form>
         ) : (
-          'ijkl'
+          <div>
+      <p className="text-2xl text-red-700 flex justify-start mx-44 mt-8 font-bold tracking-widest">
+        All Orders ({orderData.length})
+      </p>
+      {orderData.map((order:any) => (
+  order.orderItems.map((item:any) => (
+    <div className="flex justify-center mt-12" key={item.id}>
+      <div className="w-3/4 bg-slate-200 rounded-lg flex">
+        <Image
+          src={item.items.img}
+          alt="image"
+          width={300}
+          height={300}
+          style={{
+            borderRadius: '12px'
+          }}
+        />
+        <div className="flex flex-col p-10 gap-3">
+          <h1 className="text-red-700 tracking-wider text-xl">{item.items.name}</h1>
+          <h2 className="text-red-800 text-lg">price: {item.items.price}</h2>
+          <h2 className="text-gray-700">Quantity: {item.quantity}</h2>
+          <h2 className="text-gray-700">Customer Name: {order.customer.firstName}{order.customer.lastName}</h2>
+        </div>
+      </div>
+    </div>
+  ))
+))}
+    </div>
         )}
       </div>
     </div>
