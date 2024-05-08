@@ -50,7 +50,6 @@ export default function Cart() {
         })
       })
       const data = await res.json()
-      console.log('data-------------', data)
       window.location.href = data.url
     } catch (error) {}
   }

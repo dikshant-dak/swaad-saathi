@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 const Success = () => {
   return (
     <div className="bg-gray-100 h-1/2 w-full ">
@@ -20,12 +22,12 @@ const Success = () => {
           </p>
           <p> Have a great day! </p>
           <div className="py-10 text-center">
-            <a
+            <Link
               href="/"
               className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-md"
             >
               GO BACK
-            </a>
+            </Link>
           </div>
         </div>
       </div>

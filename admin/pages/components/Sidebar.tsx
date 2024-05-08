@@ -17,7 +17,6 @@ const Sidebar = () => {
   const [city, setCity] = useState([])
   const [restaurants, setRestaurants] = useState<any>([])
 
-  // console.log(restaurants[0].city)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,7 +30,6 @@ const Sidebar = () => {
 
     fetchData()
   }, [])
-console.log(orderData)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -122,7 +120,6 @@ console.log(orderData)
         [e.target.name]: e.target.value
       });
     }
-    console.log(itemData);
   };
   const handleItemSubmit = async (e: any) => {
     e.preventDefault()
@@ -143,6 +140,9 @@ console.log(orderData)
         })
       })
       const data = await response.json()
+      if(data){
+        window.alert("Item Added Successfully")
+      }
     } catch (error) {
       console.log('Error adding item:', error)
     }
@@ -167,6 +167,9 @@ console.log(orderData)
       })
 
       const data = await response.json()
+      if(data){
+        window.alert("Restaurant Added Successfully")
+      }
     } catch (error) {
       console.error('Error adding restaurant:', error)
     }

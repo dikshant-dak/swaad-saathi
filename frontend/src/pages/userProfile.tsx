@@ -21,7 +21,6 @@ const Profile = () => {
   const { authState } = useAuthState();
   const [customerData, setCustomerData] = useState<Customer | null>(null)
   const [isLoading, setIsLoading] = useState(true);
-console.log("----",authState)
   useEffect(() => {
     setIsLoading(false);
     if (authState.loggedIn === true) {

@@ -46,7 +46,6 @@ router.post('/checkout', async (req, res) => {
       cancel_url: 'http://localhost:3000/Failure'
     })
     res.json({ url: session.url })
-    console.log('Session ID: ', session.id)
   } catch (error) {
     console.error('Error creating checkout session:', error)
     res.status(500).json({ error: error })

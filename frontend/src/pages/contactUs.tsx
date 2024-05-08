@@ -13,7 +13,6 @@ const ContactForm = () => {
   const { authState } = useAuthState()
   const [customerData, setCustomerData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  console.log('----')
   useEffect(() => {
     setIsLoading(false)
     if (authState.loggedIn === true) {
@@ -36,7 +35,7 @@ const ContactForm = () => {
           <h1 className="text-5xl font-semibold">Message Us</h1>
           <p className="mt-5 text-base">
             We want to hear from you! If you have any questions, feedback, or
-            suggestions, please don't hesitate to contact us. You can message us
+            suggestions, please do not hesitate to contact us. You can message us
             as:
           </p>
 
