@@ -205,7 +205,9 @@ const Header = ({ customerData }: { customerData: any }) => {
                 <Image
                   src={restaurant.img}
                   alt={restaurant.name}
-                  className="w-20 h-20 rounded-lg"
+                  className="w-28 h-20 rounded-lg"
+                  width="200"
+                  height="100"
                 />
                 <div>
                   <h1 className="font-bold text-sm text-red-700">

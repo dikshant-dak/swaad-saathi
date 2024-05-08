@@ -154,8 +154,8 @@ const Menu = () => {
                     alt="Menu Image 1"
                     className="rounded-t-lg object-cover"
                     height={200}
-                    // src={restaurant.img}
-                    src="https://t4.ftcdn.net/jpg/02/03/06/45/360_F_203064510_mkerPoGGefI6JwajMaMoshbMwU6PFbhr.jpg"
+                    src={restaurant.img}
+                    // src="https://t4.ftcdn.net/jpg/02/03/06/45/360_F_203064510_mkerPoGGefI6JwajMaMoshbMwU6PFbhr.jpg"
                     style={{
                       aspectRatio: '300/200',
                       objectFit: 'cover'
@@ -193,14 +193,14 @@ const Menu = () => {
                   >
                     +
                   </button>
-                  {!showGoToCart[restaurant.id] && (
-                    <button
-                      className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
-                      onClick={() => handleAddToCart(restaurant.id)}
-                    >
-                      Add To Cart
-                    </button>
-                  )}
+                  {!showGoToCart[restaurant.id] && authState.customerId && (
+  <button
+    className="bg-red-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"
+    onClick={() => handleAddToCart(restaurant.id)}
+  >
+    Add To Cart
+  </button>
+)}
                   {showGoToCart[restaurant.id] && (
                     <button
                       className="bg-blue-700 text-white hover:shadow-xl p-2 rounded-xl font-thin hover:scale-105 transition-all duration-300 ml-4"

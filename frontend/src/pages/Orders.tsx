@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import { useAuthState } from '@/lib/state/auth'
 import axios from 'axios'
@@ -47,7 +48,18 @@ const Orders = () => {
     return <div className="text-white">Loading...</div>
   }
 
-  console.log(orderData)
+  if(authState.customerId === null) {
+    return (
+      <>
+        <Header customerData={customerData} />
+        <div className="text-center mt-20">
+          <h1 className="text-3xl text-red-700">Please Login to view your orders</h1>
+        </div>
+        <Footer />
+      </>
+    )
+  }
+
   return (
     <>
       <Header customerData={customerData} />

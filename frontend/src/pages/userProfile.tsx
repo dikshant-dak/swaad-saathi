@@ -41,6 +41,18 @@ if (customerData) {
 } else {
   console.log('customerData is null')
 }
+
+if(authState.customerId === null) {
+  return (
+    <>
+      <Header customerData={customerData} />
+      <div className="text-center mt-20">
+        <h1 className="text-3xl text-red-700">Please Login to view your profile</h1>
+      </div>
+      <Footer />
+    </>
+  )
+}
 return (
   <>
     <Header customerData={customerData} />
