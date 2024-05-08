@@ -26,10 +26,8 @@ interface MenuItem {
   type: string
 }
 const Menu = () => {
-  // // State to store menu items
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [quantities, setQuantities] = useState<any>({})
-  // console.log(quantity)
   const handleChangeQuantity = (id: any, change: any) => {
     setQuantities((prev: any) => ({
       ...prev,
@@ -67,7 +65,6 @@ const Menu = () => {
   }, [id])
 
   const handleAddToCart = async (id: any) => {
-    console.log(id, quantities[id] || 1)
     try {
       const response = await fetch('http://localhost:4000/cartItems', {
         method: 'POST',
@@ -89,7 +86,6 @@ const Menu = () => {
   const { authState } = useAuthState()
   const [customerData, setCustomerData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  console.log('----')
   useEffect(() => {
     setIsLoading(false)
     if (authState.loggedIn === true) {

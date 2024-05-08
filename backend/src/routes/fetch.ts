@@ -35,12 +35,10 @@ const tableName = 'restaurant';
             return data;
         
         });
-        console.log(grabdata)
 
         const { data, error } = await supabase
   .from(tableName)
   .insert(grabdata);
-        console.log(grabdata);
 
         if (error) {
             console.error('Error inserting data:', error);

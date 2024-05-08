@@ -13,7 +13,6 @@ const AboutUs = () => {
   const { authState } = useAuthState()
   const [customerData, setCustomerData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  console.log('----')
   useEffect(() => {
     setIsLoading(false)
     if (authState.loggedIn === true) {

@@ -25,7 +25,6 @@ router.get('/menuOfRestaurant/:id', async (req, res) => {
       },
       relations: ['restaurant']
     })
-    console.log('😀😁😀😀', menu)
     res.json(menu)
   } catch (error) {
     console.error('Error fetching menu of this restaurant:', error)

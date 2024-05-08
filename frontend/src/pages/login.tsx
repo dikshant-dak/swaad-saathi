@@ -49,7 +49,6 @@ export default function Login() {
     }
   }
 
-  console.log("for push")
   return (
     <>
       <div className="min-h-screen flex flex-col sm:justify-center items-center bgImageAuth bg-cover bg-center bg-no-repeat">

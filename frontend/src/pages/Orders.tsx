@@ -42,7 +42,6 @@ const Orders = () => {
     }
     fetchRestroData()
   }, [authState?.customerId])
-  console.log(orderData)
 
   if (loading) {
     return <div className="text-white">Loading...</div>

@@ -17,7 +17,6 @@ const Sidebar = () => {
   const [city, setCity] = useState([])
   const [restaurants, setRestaurants] = useState<any>([])
 
-  // console.log(restaurants[0].city)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,7 +30,6 @@ const Sidebar = () => {
 
     fetchData()
   }, [])
-console.log(orderData)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -122,7 +120,6 @@ console.log(orderData)
         [e.target.name]: e.target.value
       });
     }
-    console.log(itemData);
   };
   const handleItemSubmit = async (e: any) => {
     e.preventDefault()
